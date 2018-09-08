@@ -1,6 +1,8 @@
 import org.openhab.model.script.actions.Timer
 
-var Timer timer = null
+var Timer timerKitchen = null
+var Timer timerBathroom = null
+var Timer timerStorageroom = null
 
 rule SetDay
 when
@@ -14,11 +16,16 @@ when
         Item Bathroom_Humidity changed
 then
         if ((now.getHourOfDay > 22) && (now.getHourOfDay < 08)) {
-                if (Bathroom_Humidity.state >= 60) {
+                if (Bathroom_Humidity.state >= 70) {
                         sendCommand(Bathroom_Fan, ON)
                 }
         } else {
-                sendCommand(Bathroom_Fan, OFF)
+		if (Bathroom_Humidity.state <= 60) {
+			timerBathroom = createTimer(now.plusSeconds(900)) [|
+                                sendCommand(Bathroom_Fan, OFF)
+                                timerBathroom = null
+                        ]
+		}
         }
 end
 
@@ -31,7 +38,12 @@ then
                         sendCommand(StorageRoom_Fan, ON)
                 }
         } else {
-                sendCommand(StorageRoom_Fan, OFF)
+		if (StorageRoom_Temperature.state < 30) {
+			timerStorageroom = createTimer(now.plusSeconds(900)) [|
+                                sendCommand(StorageRoom_Fan, OFF)
+                                timerStorageRoom = null
+                        ]
+                }
         }
 end
 
@@ -41,13 +53,12 @@ when
 then
 	if (ValuesBathroomHumid.state >= 70) {
 		sendCommand(Kitchen_Light, ON)
-		timer = createTimer(now.plusSeconds(900)) [|
-			sendCommand(Kitchen_Light, OFF)
-			timer = null 
-		]
 	} else {
-		sendoCommand(Kitchen_Light, OFF)
-		timer.cancel
-		timer = null
+		if (ValuesBathroomHumid.state < 70) {
+			timerKitchen = createTimer(now.plusSeconds(900)) [|
+                        sendCommand(Kitchen_Light, OFF)
+                        timer = null
+                	]
+		}
 	}
 end
