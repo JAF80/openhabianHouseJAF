@@ -1,0 +1,151 @@
+// ##### DEFINITION OF THE HOUSE STRUCTURE #####
+Group Home "Casa" <house>
+
+Group	gLight	"Luzes"	<light>	(Home)
+Group	gFan	"Ventilador"	<fan>	(Home)
+Group	gTemperature	"Temperatura"	<temperature>	(Home)
+Group	gHumidity	"Humidade"	<humidity>	(Home)
+
+// ##### Name to connect to Sonoff: bathroomSonoff
+Group   Bathroom        "WC Grande"     <bath>  (Home)
+// ##### Name to connect to Sonoff: bedroomSonoff
+Group   Bedroom "Quarto Pequeno"        <bedroom>       (Home)
+// ##### Name to connect to Sonoff: kitchenSonoff
+Group   Kitchen "Cozinha"       <kitchen>       (Home)
+// ##### Name to connect to Sonoff: livingRoomSonoff
+Group   LivingRoom      "Sala"  <sofa>  (Home)
+// ##### Name to connect to Sonoff: masterBedroomSonoff
+Group   MasterBedroom   "Quarto Grande" <bedroom_red>   (Home)
+// ##### Name to connect to Sonoff: studioSonoff
+Group   Studio  "Escritorio"    <pantry>        (Home)
+// ##### Name to connect to Sonoff: toiletSonoff
+Group   Toilet  "WC Pequeno"    <toilet>        (Home)
+// ##### Name to connect to Sonoff: hallwaySonoff
+Group   Hallway "Entrada"       <corridor>      (Home)
+// ##### Name to connect to Sonoff: storageRoomSonoff
+Group   StorageRoom     "Despensa"      <suitcase>      (Home)
+Group   SoundSystem     "Sistema Som"   <player>        (Home)
+Group   WeatherCasting  "Metereologia"  <climate>       (Home)
+
+Group   HomeTempSensorChart (Home, Charts)
+Group	HomeHumidSensorChart	(Home, Charts)
+
+Group	BathroomTempSensorChart (Home, Charts)
+Group	BathroomHumidSensorChart (Home, Charts)
+Group	StorageroomTempSensorChart (Home, Charts)
+Group	StorageroomHumidSensorChart (Home, Charts)
+
+// ##### FOR CONSTRUCT THE CHART  #####
+Number HomeSensorChartPeriod "Periodo" (Home)
+Number ValuesBathroomTemp       "Temperatura [%.2f ºC]" <temperature> (HomeTempSensorChart)
+        {mqtt="<[broker:tele/kitchenLightSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
+Number ValuesBathroomHumid       "Humidade [%.2f %%]" <humidity> (HomeHumidSensorChart)
+        {mqtt="<[broker:tele/kitchenLightSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
+
+// ##### FOR BLANK PURPOSE #####
+Number none "" (Home)
+
+// ##### FOR THE WEATHER INFORMATION  #####
+Number  Humidity        "Humidity [%d %%]"      
+	{weather="locationId=home, type=atmosphere, property=humidity"}
+Number  Pressure        "Pressure [%.1f mb]"    
+	{weather="locationId=home, type=atmosphere, property=pressure"}
+Number  Temperature     "Temperature [%.1f °C]" 
+	{weather="locationId=home, type=temperature, property=current"}
+//DateTime        ObservationTime "Observation time [%1 td.%1 tm.%1 tY %1 tH:%1 tM]"      
+//	{weather="locationId=home, type=condition, property=observationtime"}
+//DateTime        LastUpdate      "Last update [%1 td.%1 tm.%1 tY %1 tH:%1 tM]"           
+//	{weather="locationId=home, type=condition, property=lastupdade"}
+String  CommonId        "Common id [%s]"        
+	{weather="locationId=home, type=condition, property=commonId"}
+//DateTime        ObservationTime_1       "Observation time tomorrow [%1 tA]"     
+//	{weather="locationId=home, forecast=1, type=condition, property=observationtime"}
+//DateTime        ObservationTime_2       "Observation time after tomorrow [%1 tA]"       
+//	{weather="locationId=home, forecast=2, type=condition, property=observationtime"}
+String  CommonId_1      "Common id tomorrow [%s]"       
+	{weather="locationId=home, forecast=1, type=condition, property=commonId"}
+String  CommonId_2      "Common id after tomorrow [%s]" 
+	{weather="locationId=home, forecast=2, type=condition, property=commonId"}
+Number  Temp_Min_0      "Temperature min [%.0f °C]"     
+	{weather="locationId=home, forecast=0, type=temperature, property=min"}
+Number  Temp_Max_0      "Temperature max [%.0f °C]"     
+	{weather="locationId=home, forecast=0, type=temperature, property=max"}
+Number  Temp_Min_1      "Temperature min tomorrow [%.0f °C]"    
+	{weather="locationId=home, forecast=1, type=temperature, property=min"}
+Number  Temp_Max_1      "Temperature max tomorrow [%.0f °C]"    
+	{weather="locationId=home, forecast=1, type=temperature, property=max"}
+Number  Temp_Min_2      "Temperature min after tomorrow [%.0f °C]"      
+	{weather="locationId=home, forecast=2, type=temperature, property=min"}
+Number  Temp_Max_2      "Temperature max after tomorrow [%.0f °C]"      
+	{weather="locationId=home, forecast=2, type=temperature, property=max"}
+
+// ##### DEFINITION OF ALL LIGHT #####
+
+Switch  Bathroom_Light  "Luz"   <light> (Bathroom, gLight)
+        {mqtt=">[broker:cmnd/bathroomLightSonoff/POWER:command:*:default], <[broker:stat/bathroomLightSonoff/POWER:state:default]"}
+Switch  Bedroom_Light   "Luz"   <light> (Bedroom, gLight)
+        {mqtt=">[broker:cmnd/bedroomLightSonoff/POWER:command:*:default], <[broker:stat/bedroomLightSonoff/POWER:state:default]"}
+Switch  Kitchen_Light   "Luz"   <light> (Kitchen, gLight)
+        {mqtt=">[broker:cmnd/kitchenLightSonoff/POWER:command:*:default], <[broker:stat/kitchenLightSonoff/POWER:state:default]"}
+Switch  LivingRoom_Light        "Luz"   <light> (LivingRoom, gLight)
+        {mqtt=">[broker:cmnd/livingroomLightSonoff/POWER:command:*:default], <[broker:stat/livingroomLightSonoff/POWER:state:default]"}
+Switch  MasterBedroom_Light     "Luz"   <light> (MasterBedroom, gLight)
+        {mqtt=">[broker:cmnd/masterbedroomLightSonoff/POWER:command:*:default], <[broker:stat/masterbedroomLightSonoff/POWER:state:default]"}
+Switch  Studio_Light    "Luz"   <light> (Studio, gLight)
+        {mqtt=">[broker:cmnd/studioLightSonoff/POWER:command:*:default], <[broker:stat/studioLightSonoff/POWER:state:default]"}
+Switch  Toilet_Light    "Luz"   <light> (Toilet, gLight)
+        {mqtt=">[broker:cmnd/toiletLightSonoff/POWER:command:*:default], <[broker:stat/toiletLightSonoff/POWER:state:default]"}
+Switch  Hallway_Light   "Luz"   <light> (Hallway, gLight)
+        {mqtt=">[broker:cmnd/hallwayLightSonoff/POWER:command:*:default], <[broker:stat/hallwayLightSonoff/POWER:state:default]"}
+Switch  StorageRoom_Light       "Luz"   <light> (StorageRoom, gLight)
+		 {mqtt=">[broker:cmnd/lightLivingSonoff/POWER:command:*:default], <[broker:stat/lightLivingSonoff/POWER:state:default]"}
+		 
+// ##### DEFINITION OF ALL FAN #####
+Switch  Bathroom_Fan    "Ventoinha"     <fan>   (Bathroom, gFan)
+        {mqtt=">[broker:cmnd/bathroomFanSonoff/POWER:command:*:default], <[broker:stat/bathroomFanSonoff/POWER:state:default]"}
+Switch  StorageRoom_Fan "Ventoinha"     <fan>   (StorageRoom, gFan)
+        {mqtt=">[broker:cmnd/storageroomFanSonoff/POWER:command:*:default], <[broker:stat/storageroomFanSonoff/POWER:state:default]"}
+		
+// ##### DEFINITION OF ALL TEMPERATURE SENSOR #####
+Number  Bathroom_Temperature    "Temperatura"   <temperature>   (Bathroom, gTemperature, BathroomTempSensorChart)
+        {mqtt="<[broker:tele/bathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
+Number  StorageRoom_Temperature "Temperatura"   <temperature>   (StorageRoom, gTemperature, StorageroomTempSensorChart)
+        {mqtt="<[broker:tele/storageroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
+		
+// ##### DEFINITION OF ALL HUMIDITY SENSOR #####
+Number  Bathroom_Humidity       "Humidade"      <humidity>      (Bathroom, gHumidity, BathroomHumidSensorChart)
+        {mqtt="<[broker:tele/bathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
+Number  StorageRoom_Humidity    "Humidade"      <humidity>      (StorageRoom, gHumidity, StorageroomHumidSensorChart)
+        {mqtt="<[broker:tele/storageroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
+
+// ##### DEFINITION OF ALL AIR CONDITIONER ON/OFF #####
+//Switch        LivingRoom_AirCon       "Ar Condicionado"       <snow>  (LivingRoom, gAirCon)
+//      {mqtt=">[broker:cmnd/TempDisp/POWER:command:*:default], <[broker:stat/TempDisp/POWER:state:default]"}
+//Switch        MasterBedroom_AirCon    "Ar Condicionado"       <snow>  (MasterBedroom, gAirCon)
+//      {mqtt=">[broker:cmnd/TempDisp/POWER:command:*:default], <[broker:stat/TempDisp/POWER:state:default]"}
+//Switch        Studio_AirCon   "Ar Condicionado"       <snow>  (Studio, gAirCon)
+//      {mqtt=">[broker:cmnd/TempDisp/POWER:command:*:default], <[broker:stat/TempDisp/POWER:state:default]"}
+
+// ##### DEFINITION OF ALL AIR CONDITIONER TEMPERATURE CONTROLER #####
+//Number        LivingRoom_AirCon_Temp  "Ar Condicionado"       <snow>  (LivingRoom, gAirCon)
+//Number        MasterBedroom_AirCon_Temp       "Ar Condicionado"       <snow>  (MasterBedroom, gAirCon)
+//Number        Studio_AirCon_Temp      "Ar Condicionado"       <snow>  (Studio, gAirCon)
+
+// ##### DEFINITION OF SOUND CONTROLER #####
+Switch  Sonos_Shuffle   "Shuffle"       <sonos_shuffle> (Sonos)
+        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:shuffle"}
+Switch  Sonos_Mute      "Sem Som"       <sonos_mute>    (Sonos)
+        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:mute"}
+Dimmer  Sonos_Soundvolume       "Volume" <volume>       (Sonos)
+        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:volume"}
+Switch  Sonos_Stop      "Stop"  <sonos_stop>    (Sonos)
+        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:stop", autoupdate="false"}
+Switch  Sonos_Play      "Play"  <sonos_play>    (Sonos)
+        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:play", autoupdate="false"}
+Switch  Sonos_Pause     "Pause" <sonos_pause>   (Sonos)
+        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:pause", autoupdate="false"}
+String  Sonos_Radiostation      "RadioStation [%s]"     (Sonos)
+        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:radio"}
+//Switch  Sonos_Playpause "Play/Pause"    (Sonos)
+//        {channel="[ON:sonos:PLAY5:RINCON_B8E93721CE9201400:play], 
+//		[OFF:sonos:PLAY5:RINCON_B8E93721CE9201400:pause]"}

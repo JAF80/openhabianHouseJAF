@@ -1,0 +1,233 @@
+sitemap default label="Casa" {
+    Frame {
+      Webview url="/weather?locationId=home&layout=example&iconset=colorful" height=7
+    }
+    Frame {
+        Group item=SoundSystem {
+                Frame label="Controlador de Som" {
+                        Slider  item=Sonos_Soundvolume label="Volume" icon="soundvolume"
+                        Switch  item=Sonos_Mute label="Sem Som" icon="soundvolume"
+//                        Switch  item=Sonos_Playpause    label="Play/Pause"      icon="player"
+                        Text    item=Sonos_Radiostation label="Radio Station [%s]"      icon="receiver"
+                }
+        }
+    }
+    Frame {
+        Group item=MasterBedroom label="Quarto Grande" icon="bedroom_red" {
+                Frame label="Luzes" {
+                        Switch item=MasterBedroom_Light label="Acender" icon="light"
+                }
+//                Frame label="Controlador do Ar Condicionado" {
+//                        Switch item=MasterBedroom_AirCon label="Ligar" icon="heating"
+//                        Setpoint item=MasterBedroom_AirCon_Temp label="Temperatura [%.2f ºC]"
+//                              minValue=16 maxValue=35 step=0.5 icon="heating"
+//              }
+        }
+		 Group item=Bathroom label="Casa de Banho Grande" icon="bath" {
+                Frame label="Luzes" {
+                        Switch item=Bathroom_Light label="Acender" icon="light"
+                }
+                Frame label="Controlador do Ventilador" {
+                        Switch item=Bathroom_Fan label="Ligar" icon="fan"
+                        Text item=none label="" icon="none"
+                        Text item=Bathroom_Temperature label="Temperatura [%.1f ºC]" icon="temperature"
+                        Text item=Bathroom_Humidity label="Humidade [%.1f %%]" icon="humidity"
+                }
+		Frame label="Grafico de Temperatura e Humidade" {
+			Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
+                                7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
+
+                        Chart  item=HomeTempSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        Chart  item=HomeTempSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        Chart  item=HomeTempSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        Chart  item=HomeTempSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        Chart  item=HomeTempSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        Chart  item=HomeTempSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        Chart  item=HomeTempSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        Chart  item=HomeTempSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        Chart  item=HomeTempSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        Chart  item=HomeTempSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        Chart  item=HomeTempSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        Chart  item=HomeTempSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        Chart  item=HomeTempSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+
+			Chart  item=HomeHumidSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        Chart  item=HomeHumidSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        Chart  item=HomeHumidSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        Chart  item=HomeHumidSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        Chart  item=HomeHumidSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        Chart  item=HomeHumidSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        Chart  item=HomeHumidSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        Chart  item=HomeHumidSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        Chart  item=HomeHumidSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        Chart  item=HomeHumidSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        Chart  item=HomeHumidSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        Chart  item=HomeHumidSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        Chart  item=HomeHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+		}
+        }
+        Group item=Kitchen label="Cozinha" icon="kitchen" {
+                Frame label="Luzes" {
+                        Switch item=Kitchen_Light label="Acender" icon="light"
+                }
+        }
+	 Group item=LivingRoom label="Sala" icon="sofa" {
+                Frame label="Luzes" {
+                        Switch item=LivingRoom_Light label="Acender" icon="light"
+                }
+//              Frame label="Controlador do Ar Condicionado" {
+//                      Switch item=LivingRoom_AirCon label="Ligar" icon="heating"
+//                      Setpoint item=LivingRoom_AirCon_Temp label="Temperatura [%.2f ºC]"
+//                              minValue=16 maxValue=35 step=0.5 icon="heating"
+//              }
+        }
+        Group item=Studio label="Escritorio" icon="pantry" {
+                Frame label="Luzes" {
+                        Switch item=Studio_Light label="Acender" icon="light"
+                }
+//              Frame label="Controlador do Ar Condicionado" {
+//                        Switch item=Studio_AirCon label="Ligar" icon="heating"
+//                        Setpoint item=Studio_AirCon_Temp label="Temperatura [%.2f ºC]"
+//                              minValue=16 maxValue=35 step=0.5 icon="heating"
+//              }
+        }	
+		//Group item=Toilet label="Casa de Banho Pequena" icon="toilet" {
+        //      Frame label="Luzes" {
+        //              Switch item=Toilet_Light label="Acender" icon="light"
+        //      }
+        //}
+        Group item=Hallway label="Entrada" icon="corridor" {
+                Frame label="Luzes" {
+                        Switch item=Hallway_Light label="Acender" icon="light"
+                }
+        }
+        Group item=StorageRoom label="Despensa" icon="suitcase" {
+                Frame label="Luzes" {
+                        Switch item=StorageRoom_Light label="Acender" icon="light"
+                }
+		Frame label="Controlador do Ventilador" {
+                        Switch item=StorageRoom_Fan label="Ligar" icon="fan"
+                        Text item=none label="" icon="none"
+                        Text item=StorageRoom_Temperature label="Temperatura [%.1f ºC]" icon="temperature"
+                        Text item=StorageRoom_Humidity label="Humidade [%.1f %%]" icon="humidity"
+                }
+		Frame label="Graficos da Temperatura e da Humidade" {
+			Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
+                                7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
+
+                        Chart  item=HomeTempSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        Chart  item=HomeTempSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        Chart  item=HomeTempSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        Chart  item=HomeTempSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        Chart  item=HomeTempSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        Chart  item=HomeTempSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        Chart  item=HomeTempSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        Chart  item=HomeTempSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        Chart  item=HomeTempSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        Chart  item=HomeTempSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        Chart  item=HomeTempSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        Chart  item=HomeTempSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        Chart  item=HomeTempSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+
+                        Chart  item=HomeHumidSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        Chart  item=HomeHumidSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        Chart  item=HomeHumidSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        Chart  item=HomeHumidSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        Chart  item=HomeHumidSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        Chart  item=HomeHumidSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        Chart  item=HomeHumidSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        Chart  item=HomeHumidSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        Chart  item=HomeHumidSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        Chart  item=HomeHumidSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        Chart  item=HomeHumidSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        Chart  item=HomeHumidSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        Chart  item=HomeHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+		}
+        }
+    }
+	Frame {
+        Group item=gLight label="Luz" icon="light" {
+                Frame label="Acender as Luzes" {
+                        Switch item=Bathroom_Light label="Casa de Banho Grande" icon="light"
+                        Switch item=Bedroom_Light label="Quarto Pequeno" icon="light"
+                        Switch item=Kitchen_Light label="Cozinha" icon="light"
+                        Switch item=LivingRoom_Light label="Sala" icon="light"
+                        Switch item=MasterBedroom_Light label="Quarto Grande" icon="light"
+                        Switch item=Studio_Light label="Escritorio" icon="light"
+                        Switch item=Toilet_Light label="WC Pequeno" icon="light"
+                        Switch item=Hallway_Light label="Entrada" icon="light"
+                        Switch item=StorageRoom_Light label="Despensa" icon="light"
+                }
+        }
+
+        Group item=gFan label="Ventiladores" icon="fan" {
+                Frame label="Ligar os Ventiladores" {
+                        Switch item=Bathroom_Fan label="Casa de Banho Grande" icon="fan"
+                        Switch item=StorageRoom_Fan label="Despensa" icon="fan"
+                }
+        }
+
+        Group item=gTemperature label="Temperatura" icon="temperature" {
+                Frame label="Temperatura" {
+                        Text item=Bathroom_Temperature label="Casa de Banho Grande [%.2f ºC]" icon="temperature"
+                        Text item=StorageRoom_Temperature label="Despensa [%.2f ºC]" icon="temperature"
+                }
+        }
+	Group item=gHumidity label="Humidade" icon="humidity" {
+                Frame label="Humidade" {
+                        Text item=Bathroom_Humidity label="Casa de Banho Grande [%.2f %%]" icon="humidity"
+                        Text item=StorageRoom_Humidity label="Despensa [%.2f %%]" icon="humidity"
+                }
+        }
+
+//        Text label="Ar Condicionado" icon="snow" {
+//                Frame label="Ligar o Ar Condicionado" {
+//                        Switch item=LivingRoom_AirCon label="Sala" icon="heating"
+//                        Switch item=MasterBedroom_AirCon label="Quarto Grande" icon="heating"
+//                        Switch item=Studio_AirCon label="Escritorio" icon="heating"
+//                }
+//		Frame label="Definir a Temperatura desejada" {
+//                        Setpoint item=LivingRoom_AirCon_Temp label="Temperatura [%.2f ºC]"
+//                                minValue=16 maxValue=35 step=0.5 icon="heating"
+//                        Setpoint item=MasterBedroom_AirCon_Temp label="Temperatura [%.2f ºC]"
+//                                minValue=16 maxValue=35 step=0.5 icon="heating"
+//                        Setpoint item=Studio_AirCon_Temp label="Temperatura [%.2f ºC]"
+//                                minValue=16 maxValue=35 step=0.5 icon="heating"
+//                }
+//        }
+	}
+		Frame {
+			Text item=ValuesBathroomTemp label="Temperatura [%.1f ºC]" icon="temperature"
+			Text item=ValuesBathroomHumid label="Humidade [%.1f %%]" icon="humidity"
+			Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
+				7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
+
+			Chart  item=HomeTempSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+			Chart  item=HomeTempSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+			Chart  item=HomeTempSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+			Chart  item=HomeTempSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+			Chart  item=HomeTempSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+			Chart  item=HomeTempSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+			Chart  item=HomeTempSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+			Chart  item=HomeTempSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+			Chart  item=HomeTempSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+			Chart  item=HomeTempSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+			Chart  item=HomeTempSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+			Chart  item=HomeTempSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+			Chart  item=HomeTempSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+
+                        Chart  item=HomeHumidSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        Chart  item=HomeHumidSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        Chart  item=HomeHumidSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        Chart  item=HomeHumidSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        Chart  item=HomeHumidSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        Chart  item=HomeHumidSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        Chart  item=HomeHumidSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        Chart  item=HomeHumidSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        Chart  item=HomeHumidSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        Chart  item=HomeHumidSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        Chart  item=HomeHumidSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        Chart  item=HomeHumidSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        Chart  item=HomeHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+    }
+}		

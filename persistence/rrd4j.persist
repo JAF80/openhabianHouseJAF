@@ -1,0 +1,22 @@
+Strategies {
+	// for rrd chart cron strategy every minute
+	everyMinute : "0 * * * * ?"
+	// get data reduced for older values to keep database small
+	everyHour : "0 0 * * * ?"
+	everyDay : "0 0 0 * * ?"
+
+	default = everyChange
+}
+
+Items {
+	// additionally persist Items
+	BathroomTempSensorChar* : strategy = everyUpdate, everyMinute
+	BathroomHumidSensorChar* : strategy = everyUpdate, everyMinute
+	StorageroomTempSensorChar* : strategy = everyUpdate, everyMinute
+	StorageroomHumidSensorChar* : strategy = everyUpdate, everyMinute
+
+	HomeTempSensorChart* : strategy = everyUpdate, everyMinute
+	HomeHumidSensorChart* : strategy = everyUpdate, everyMinute
+	//ValuesBathroomTemp : strategy = everyUpdate, everyMinute
+	//ValuesBathroomHumi : strategy = everyUpdate, everyMinute
+}

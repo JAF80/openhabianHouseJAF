@@ -1,0 +1,53 @@
+import org.openhab.model.script.actions.Timer
+
+var Timer timer = null
+
+rule SetDay
+when
+	System started or Time is midnight
+then
+	Date.postUpdate(new DateTimeType())
+end
+
+rule controlHumidityInBathroom
+when
+        Item Bathroom_Humidity changed
+then
+        if ((now.getHourOfDay > 22) && (now.getHourOfDay < 08)) {
+                if (Bathroom_Humidity.state >= 60) {
+                        sendCommand(Bathroom_Fan, ON)
+                }
+        } else {
+                sendCommand(Bathroom_Fan, OFF)
+        }
+end
+
+rule controlTemperatureInStorageRoom
+when
+        Item StorageRoom_Temperature changed
+then
+        if ((now.getHourOfDay > 22) && (now.getHourofDay < 08)) {
+                if (StorageRoom_Temperature.state >= 40) {
+                        sendCommand(StorageRoom_Fan, ON)
+                }
+        } else {
+                sendCommand(StorageRoom_Fan, OFF)
+        }
+end
+
+rule testKitchenRoom
+when
+	Item ValuesBathroomHumid changed
+then
+	if (ValuesBathroomHumid.state >= 70) {
+		sendCommand(Kitchen_Light, ON)
+		timer = createTimer(now.plusSeconds(900)) [|
+			sendCommand(Kitchen_Light, OFF)
+			timer = null 
+		]
+	} else {
+		sendoCommand(Kitchen_Light, OFF)
+		timer.cancel
+		timer = null
+	}
+end
