@@ -147,6 +147,9 @@ sitemap default label="Casa" {
     }
 	Frame {
         Group item=gLight label="Luz" icon="light" {
+		Frame label="Controlar todas as Luzes" {
+			Switch item=gLight label="Todas as luzes" icon="light" mappings=[OFF="All Off", ON="All On"]
+		}
                 Frame label="Acender as Luzes" {
                         Switch item=Bathroom_Light label="Casa de Banho Grande" icon="light"
                         Switch item=Bedroom_Light label="Quarto Pequeno" icon="light"
@@ -161,6 +164,9 @@ sitemap default label="Casa" {
         }
 
         Group item=gFan label="Ventiladores" icon="fan" {
+		Frame label="Controlar todos os Ventiladores" {
+			Switch item=gFan label="Todos os Ventiladores" icon="light" mappings=[OFF="All Off", ON="All ON"]
+		}
                 Frame label="Ligar os Ventiladores" {
                         Switch item=Bathroom_Fan label="Casa de Banho Grande" icon="fan"
                         Switch item=StorageRoom_Fan label="Despensa" icon="fan"
@@ -196,38 +202,22 @@ sitemap default label="Casa" {
 //                }
 //        }
 	}
-		Frame {
-			Text item=ValuesBathroomTemp label="Temperatura [%.1f ºC]" icon="temperature"
-			Text item=ValuesBathroomHumid label="Humidade [%.1f %%]" icon="humidity"
-			Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
-				7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
+	Frame label="Grafico de Consumo de Energia" {
+                        Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
+                                7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
 
-			Chart  item=HomeTempSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
-			Chart  item=HomeTempSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
-			Chart  item=HomeTempSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
-			Chart  item=HomeTempSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
-			Chart  item=HomeTempSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
-			Chart  item=HomeTempSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
-			Chart  item=HomeTempSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
-			Chart  item=HomeTempSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
-			Chart  item=HomeTempSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
-			Chart  item=HomeTempSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
-			Chart  item=HomeTempSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
-			Chart  item=HomeTempSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
-			Chart  item=HomeTempSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
-
-                        Chart  item=HomeHumidSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
-                        Chart  item=HomeHumidSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
-                        Chart  item=HomeHumidSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
-                        Chart  item=HomeHumidSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
-                        Chart  item=HomeHumidSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
-                        Chart  item=HomeHumidSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
-                        Chart  item=HomeHumidSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
-                        Chart  item=HomeHumidSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
-                        Chart  item=HomeHumidSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
-                        Chart  item=HomeHumidSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
-                        Chart  item=HomeHumidSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
-                        Chart  item=HomeHumidSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
-                        Chart  item=HomeHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
-    }
+                        Chart  item=HomeEnergyChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        Chart  item=HomeEnergyChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        Chart  item=HomeEnergyChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        Chart  item=HomeEnergyChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        Chart  item=HomeEnergyChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        Chart  item=HomeEnergyChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        Chart  item=HomeEnergyChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        Chart  item=HomeEnergyChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        Chart  item=HomeEnergyChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        Chart  item=HomeEnergyChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        Chart  item=HomeEnergyChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        Chart  item=HomeEnergyChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        Chart  item=HomeEnergyChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+	}
 }		
