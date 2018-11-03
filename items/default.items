@@ -24,7 +24,8 @@ Group   Toilet  "WC Pequeno"    <toilet>        (Home)
 Group   Hallway "Entrada"       <corridor>      (Home)
 // ##### Name to connect to Sonoff: storageRoomSonoff
 Group   StorageRoom     "Despensa"      <suitcase>      (Home)
-Group   SoundSystem     "Sistema Som"   <player>        (Home)
+// ##### Name to connect to Sonoff: stairwell
+Group	Stairwell	"Luz da Escada"	<suitcase>	(Home)
 Group   WeatherCasting  "Metereologia"  <climate>       (Home)
 
 Group   HomeTempSensorChart (Home, Charts)
@@ -100,7 +101,9 @@ Switch  Toilet_Light    "Luz"   <light> (Toilet, gLight)
 Switch  Hallway_Light   "Luz"   <light> (Hallway, gLight)
         {mqtt=">[broker:cmnd/hallwayLightSonoff/POWER:command:*:default], <[broker:stat/hallwayLightSonoff/POWER:state:default]"}
 Switch  StorageRoom_Light       "Luz"   <light> (StorageRoom, gLight)
-		 {mqtt=">[broker:cmnd/lightLivingSonoff/POWER:command:*:default], <[broker:stat/lightLivingSonoff/POWER:state:default]"}
+	{mqtt=">[broker:cmnd/lightLivingSonoff/POWER:command:*:default], <[broker:stat/lightLivingSonoff/POWER:state:default]"}
+Switch	Stairwell_Light	"Luz" <light>	(Stairwell, gLight)
+	{mqtt=">[broker:cmnd/stairwellLightSonoff/POWER:command:*:default], <[broker:stat(stairwellLightSonoff/POWER:state:default]"}
 		 
 // ##### DEFINITION OF ALL FAN #####
 Switch  Bathroom_Fan    "Ventoinha"     <fan>   (Bathroom, gFan)
@@ -113,7 +116,7 @@ Number  Bathroom_Temperature    "Temperatura"   <temperature>   (Bathroom, gTemp
         {mqtt="<[broker:tele/bathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
 Number  StorageRoom_Temperature "Temperatura"   <temperature>   (StorageRoom, gTemperature, StorageroomTempSensorChart)
         {mqtt="<[broker:tele/storageroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
-		
+	
 // ##### DEFINITION OF ALL HUMIDITY SENSOR #####
 Number  Bathroom_Humidity       "Humidade"      <humidity>      (Bathroom, gHumidity, BathroomHumidSensorChart)
         {mqtt="<[broker:tele/bathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
@@ -132,22 +135,3 @@ Number  StorageRoom_Humidity    "Humidade"      <humidity>      (StorageRoom, gH
 //Number        LivingRoom_AirCon_Temp  "Ar Condicionado"       <snow>  (LivingRoom, gAirCon)
 //Number        MasterBedroom_AirCon_Temp       "Ar Condicionado"       <snow>  (MasterBedroom, gAirCon)
 //Number        Studio_AirCon_Temp      "Ar Condicionado"       <snow>  (Studio, gAirCon)
-
-// ##### DEFINITION OF SOUND CONTROLER #####
-Switch  Sonos_Shuffle   "Shuffle"       <sonos_shuffle> (Sonos)
-        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:shuffle"}
-Switch  Sonos_Mute      "Sem Som"       <sonos_mute>    (Sonos)
-        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:mute"}
-Dimmer  Sonos_Soundvolume       "Volume" <volume>       (Sonos)
-        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:volume"}
-Switch  Sonos_Stop      "Stop"  <sonos_stop>    (Sonos)
-        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:stop", autoupdate="false"}
-Switch  Sonos_Play      "Play"  <sonos_play>    (Sonos)
-        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:play", autoupdate="false"}
-Switch  Sonos_Pause     "Pause" <sonos_pause>   (Sonos)
-        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:pause", autoupdate="false"}
-String  Sonos_Radiostation      "RadioStation [%s]"     (Sonos)
-        {channel="sonos:PLAY5:RINCON_B8E93721CE9201400:radio"}
-//Switch  Sonos_Playpause "Play/Pause"    (Sonos)
-//        {channel="[ON:sonos:PLAY5:RINCON_B8E93721CE9201400:play], 
-//		[OFF:sonos:PLAY5:RINCON_B8E93721CE9201400:pause]"}
