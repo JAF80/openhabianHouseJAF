@@ -1,17 +1,7 @@
 sitemap default label="Casa" {
-    Frame {
-      Webview url="/weather?locationId=home&layout=example&iconset=colorful" height=7
-    }
-    Frame {
-        Group item=SoundSystem {
-                Frame label="Controlador de Som" {
-                        Slider  item=Sonos_Soundvolume label="Volume" icon="soundvolume"
-                        Switch  item=Sonos_Mute label="Sem Som" icon="soundvolume"
-//                        Switch  item=Sonos_Playpause    label="Play/Pause"      icon="player"
-                        Text    item=Sonos_Radiostation label="Radio Station [%s]"      icon="receiver"
-                }
-        }
-    }
+    //Frame {
+    //  Webview url="/weather?locationId=home&layout=example&iconset=colorful" height=7
+    //}
     Frame {
         Group item=MasterBedroom label="Quarto Grande" icon="bedroom_red" {
                 Frame label="Luzes" {
@@ -23,11 +13,16 @@ sitemap default label="Casa" {
 //                              minValue=16 maxValue=35 step=0.5 icon="heating"
 //              }
         }
-		 Group item=Bathroom label="Casa de Banho Grande" icon="bath" {
+	Group item=Bedroom label="Quarto Bebé" icon="baby_3" {
+                Frame label="Luzes" {
+                        Switch item=Bedroom_Light label="Acender" icon="light"
+                }
+        }
+	Group item=Bathroom label="Casa de Banho Grande" icon="bath" {
                 Frame label="Luzes" {
                         Switch item=Bathroom_Light label="Acender" icon="light"
-                }
-                Frame label="Controlador do Ventilador" {
+        	}
+               	Frame label="Controlador do Ventilador" {
                         Switch item=Bathroom_Fan label="Ligar" icon="fan"
                         Text item=none label="" icon="none"
                         Text item=Bathroom_Temperature label="Temperatura [%.1f ºC]" icon="temperature"
@@ -66,12 +61,17 @@ sitemap default label="Casa" {
                         Chart  item=HomeHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
 		}
         }
+	Group item=Toilet label="Casa de Banho Pequena" icon="toilet" {
+                Frame label="Luzes" {
+                        Switch item=Toilet_Light label="Acender" icon="light"
+                }
+        }
         Group item=Kitchen label="Cozinha" icon="kitchen" {
                 Frame label="Luzes" {
                         Switch item=Kitchen_Light label="Acender" icon="light"
                 }
         }
-	 Group item=LivingRoom label="Sala" icon="sofa" {
+	Group item=LivingRoom label="Sala" icon="sofa" {
                 Frame label="Luzes" {
                         Switch item=LivingRoom_Light label="Acender" icon="light"
                 }
@@ -91,14 +91,14 @@ sitemap default label="Casa" {
 //                              minValue=16 maxValue=35 step=0.5 icon="heating"
 //              }
         }	
-		//Group item=Toilet label="Casa de Banho Pequena" icon="toilet" {
-        //      Frame label="Luzes" {
-        //              Switch item=Toilet_Light label="Acender" icon="light"
-        //      }
-        //}
         Group item=Hallway label="Entrada" icon="corridor" {
                 Frame label="Luzes" {
                         Switch item=Hallway_Light label="Acender" icon="light"
+                }
+        }
+	Group item=Stairwell label="Luz da Rua" icon="outdoorlight" {
+                Frame label="Luzes" {
+                        Switch item=Stairwell_Light label="Acender" icon="light"
                 }
         }
         Group item=StorageRoom label="Despensa" icon="suitcase" {
@@ -151,18 +151,18 @@ sitemap default label="Casa" {
 			Switch item=gLight label="Todas as luzes" icon="light" mappings=[OFF="All Off", ON="All On"]
 		}
                 Frame label="Acender as Luzes" {
-                        Switch item=Bathroom_Light label="Casa de Banho Grande" icon="light"
+			Switch item=MasterBedroom_Light label="Quarto Grande" icon="light"
                         Switch item=Bedroom_Light label="Quarto Pequeno" icon="light"
+			Switch item=Bathroom_Light label="Casa de Banho Grande" icon="light"
+			Switch item=Toilet_Light label="Casa de Banho Pequeno" icon="light"
                         Switch item=Kitchen_Light label="Cozinha" icon="light"
                         Switch item=LivingRoom_Light label="Sala" icon="light"
-                        Switch item=MasterBedroom_Light label="Quarto Grande" icon="light"
                         Switch item=Studio_Light label="Escritorio" icon="light"
-                        Switch item=Toilet_Light label="WC Pequeno" icon="light"
                         Switch item=Hallway_Light label="Entrada" icon="light"
+			Switch item=Stairwell_Light label="Luz da Rua" icon="light"
                         Switch item=StorageRoom_Light label="Despensa" icon="light"
                 }
         }
-
         Group item=gFan label="Ventiladores" icon="fan" {
 		Frame label="Controlar todos os Ventiladores" {
 			Switch item=gFan label="Todos os Ventiladores" icon="light" mappings=[OFF="All Off", ON="All ON"]
@@ -172,7 +172,6 @@ sitemap default label="Casa" {
                         Switch item=StorageRoom_Fan label="Despensa" icon="fan"
                 }
         }
-
         Group item=gTemperature label="Temperatura" icon="temperature" {
                 Frame label="Temperatura" {
                         Text item=Bathroom_Temperature label="Casa de Banho Grande [%.2f ºC]" icon="temperature"
