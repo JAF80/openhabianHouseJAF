@@ -12,13 +12,7 @@ Items {
 	// additionally persist Items
 	BathroomTempSensorChar* : strategy = everyUpdate, everyMinute
 	BathroomHumidSensorChar* : strategy = everyUpdate, everyMinute
-	StorageroomTempSensorChar* : strategy = everyUpdate, everyMinute
-	StorageroomHumidSensorChar* : strategy = everyUpdate, everyMinute
 	HomeEnergyChart* : strategy = everyUpdate, everyMinute
 
-	HomeTempSensorChart* : strategy = everyUpdate, everyMinute
-	HomeHumidSensorChart* : strategy = everyUpdate, everyMinute
-	//ValuesBathroomTemp : strategy = everyUpdate, everyMinute
-	//ValuesBathroomHumi : strategy = everyUpdate, everyMinute
 	EnergyTotal : strategy = everyUpdate, everyMinute
 }
