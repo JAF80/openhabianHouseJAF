@@ -1,8 +1,8 @@
 import org.openhab.model.script.actions.Timer
 import org.openhab.core.library.types.DateTimeType
 
-var Timer timerKitchen = null
-var Timer timerBathroom = null
+var Timer timerBathroomFan = null
+var Timer timerBathroomHeater = null
 
 var DateTime RoofEnabled
 var DateTime RoofDisabled
@@ -19,20 +19,30 @@ end
 
 rule controlHumidityInBathroom
 when
-        Item Bathroom_Humidity received update
+        Item Bathroom_Humidity changed
 then
-        if ((now.getHourOfDay > 22) && (now.getHourOfDay < 08)) {
-                if (Bathroom_Humidity.state >= 75) {
+        if ((now.getHourOfDay() > 08) && (now.getHourOfDay() < 22)) {
+                if ((Bathroom_Humidity.state >= 80) && (Bathroom_Fan == OFF)) {
                         sendCommand(Bathroom_Fan, ON)
                 }
         } else {
-		if (Bathroom_Humidity.state <= 70) {
-			timerBathroom = createTimer(now.plusSeconds(1800)) [|
+		if (Bathroom_Humidity.state <= 75) {
+			timerBathroomFan = createTimer(now.plusSeconds(1800)) [|
                                 sendCommand(Bathroom_Fan, OFF)
-                                timerBathroom = null
+                                //timerBathroomFan = null
                         ]
 		} 
         }
+end
+
+rule shutdownBathroomHeaterTowel
+when
+	Item Bathroom_Towel_Heater received update ON
+then
+	timerBathroomHeater = createTimer(now.plusSeconds(2700)) [|
+		sendCommand(Bathroom_Towel_Heater, OFF)
+		//timerBathroomHeater = null
+	]
 end
 
 rule "Startup Init"
