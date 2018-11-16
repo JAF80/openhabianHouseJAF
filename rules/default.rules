@@ -17,22 +17,31 @@ then
 	Date.postUpdate(new DateTimeType())
 end
 
-rule controlHumidityInBathroom
+rule ControlHumidityInBathroom
 when
-        Item Bathroom_Humidity changed
+	Time cron "0 0/2 8-22 ? * *"
 then
-        if ((now.getHourOfDay() > 08) && (now.getHourOfDay() < 22)) {
-                if ((Bathroom_Humidity.state >= 80) && (Bathroom_Fan == OFF)) {
-                        sendCommand(Bathroom_Fan, ON)
-                }
-        } else {
-		if (Bathroom_Humidity.state <= 75) {
+	if ((Bathroom_Humidity.state >= 80) && (Bathroom_Fan.state == OFF)) {
+		sendCommand(Bathroom_Fan, ON)
+	} else {
+		if ((Bathroom_Humidity.state <= 75) && (Bathroom_Fan.state == ON)) {
 			timerBathroomFan = createTimer(now.plusSeconds(1800)) [|
                                 sendCommand(Bathroom_Fan, OFF)
-                                //timerBathroomFan = null
+                                timerBathroomFan = null
                         ]
-		} 
-        }
+		}
+	}
+end
+
+rule StopFanAtNightInBathroom
+when
+	Time cron "0 0/2 22-8 ? * *"
+then
+	if (Bathroom_Fan.state == ON) {
+		sendCommand(Bathroom_Fan, OFF)
+		timerBathroomFan.cancel()
+		timerBathroomFan = null
+	}
 end
 
 rule shutdownBathroomHeaterTowel
@@ -41,7 +50,7 @@ when
 then
 	timerBathroomHeater = createTimer(now.plusSeconds(2700)) [|
 		sendCommand(Bathroom_Towel_Heater, OFF)
-		//timerBathroomHeater = null
+		timerBathroomHeater = null
 	]
 end
 
