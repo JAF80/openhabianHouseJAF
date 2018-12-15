@@ -1,9 +1,10 @@
 // ##### DEFINITION OF THE HOUSE STRUCTURE #####
-Group Home "Casa" <house>
+Group Home "Casa" <group>
 
 Group:Switch:OR(ON,OFF)	gLight	"Luzes"	<light>	(Home)
 Group:Switch:OR(ON,OFF)	gFan	"Ventilador"	<fan>	(Home)
 Group:Switch:OR(ON,OFF) gHeater	"Aquecedor"	<heating>	(Home)
+Group:Switch:OR(ON,OFF) gDehumidity	"Desumidificador"	<humidity>	(Home)
 Group	gTemperature	"Temperatura"	<temperature>	(Home)
 Group	gHumidity	"Humidade"	<humidity>	(Home)
 
@@ -18,7 +19,7 @@ Group   LivingRoom      "Sala"  <sofa>  (Home)
 // ##### Name to connect to Sonoff: masterBedroomSonoff
 Group   MasterBedroom   "Quarto Grande" <bedroom_red>   (Home)
 // ##### Name to connect to Sonoff: studioSonoff
-Group   Studio  "Escritorio"    <pantry>        (Home)
+Group   Office  "Escritorio"    <office>        (Home)
 // ##### Name to connect to Sonoff: toiletSonoff
 Group   Toilet  "WC Pequeno"    <toilet>        (Home)
 // ##### Name to connect to Sonoff: hallwaySonoff
@@ -48,15 +49,27 @@ Number none "" (Home)
 // ##### DEFINITION OF ALL HEATER #####
 Switch	Bathroom_Towel_Heater	"Aquecedor Toalha"	<heating>	(Bathroom, gHeater)
 	{mqtt=">[broker:cmnd/BathroomHeaterSonoff/POWER:command:*:default], <[broker:stat/BathroomHeaterSonoff/POWER:state:default]"}
+Switch  Office_Heater   "Aquecedor Toalha"      <heating>       (Office, gHeater)
+        {mqtt=">[broker:cmnd/OfficeHeaterSonoff/POWER:command:*:default], <[broker:stat/OfficeHeaterSonoff/POWER:state:default]"}
+Switch  Masterbedroom_Heater   "Aquecedor Toalha"      <heating>       (MasterBedroom, gHeater)
+        {mqtt=">[broker:cmnd/MasterbedroomHeaterSonoff/POWER:command:*:default], <[broker:stat/MasterbedroomHeaterSonoff/POWER:state:default]"}
 		 
 // ##### DEFINITION OF ALL FAN #####
 Switch  Bathroom_Fan    "Ventoinha"     <fan>   (Bathroom, gFan)
         {mqtt=">[broker:cmnd/BathroomFanSonoff/POWER:command:*:default], <[broker:stat/BathroomFanSonoff/POWER:state:default]"}
+
+// ##### DEFINITION OF ALL DEHUMIDIFIER #####
+Switch	Office_Dehumi	"Desumidificador"	<humidity>	(Office, gDehumidity)
+	{mqtt=">[broker:cmnd/StudioDehumiSonoff/POWER:command:*:default], <[broker:stat/StudioDehumiSonoff/POWER:state:default]"}
 		
 // ##### DEFINITION OF ALL TEMPERATURE SENSOR #####
 Number  Bathroom_Temperature    "Temperatura"   <temperature>   (Bathroom, gTemperature, BathroomTempSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
+Number  Studio_Temperature    "Temperatura"   <temperature>   (Studio, gTemperature)
+//        {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
 	
 // ##### DEFINITION OF ALL HUMIDITY SENSOR #####
 Number  Bathroom_Humidity       "Humidade"      <humidity>      (Bathroom, gHumidity, BathroomHumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
+Number  Studio_Humidity       "Humidade"      <humidity>      (Studio, gHumidity)
+//        {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}

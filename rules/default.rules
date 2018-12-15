@@ -24,7 +24,7 @@ then
 	if ((Bathroom_Humidity.state >= 85) && (Bathroom_Fan.state == OFF)) {
 		sendCommand(Bathroom_Fan, ON)
 	} else {
-		if ((Bathroom_Humidity.state < 85) && (Bathroom_Fan.state == ON)) {
+		if ((Bathroom_Humidity.state < 80) && (Bathroom_Fan.state == ON)) {
 			timerBathroomFan = createTimer(now.plusSeconds(1800)) [|
                                 sendCommand(Bathroom_Fan, OFF)
                                 timerBathroomFan = null
@@ -40,7 +40,7 @@ then
         if ((Bathroom_Humidity.state >= 85) && (Bathroom_Fan.state == OFF)) {
                 sendCommand(Bathroom_Fan, ON)
         } else {
-                if ((Bathroom_Humidity.state < 85) && (Bathroom_Fan.state == ON)) {
+                if ((Bathroom_Humidity.state < 80) && (Bathroom_Fan.state == ON)) {
                         timerBathroomFan = createTimer(now.plusSeconds(1800)) [|
                                 sendCommand(Bathroom_Fan, OFF)
                                 timerBathroomFan = null
