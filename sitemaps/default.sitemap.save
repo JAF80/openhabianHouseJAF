@@ -6,11 +6,10 @@ sitemap default label="Casa" {
 	Group item=Bathroom label="Casa de Banho Grande" icon="bath" {
                 Frame label="Aquecedor Toalha" {
                         Switch item=Bathroom_Towel_Heater label="Ligar" icon="heating"
-			Text item=Countdown_Bathroom_Towel_Heater label="Temporizador [%d m]" icon="time"
         	}
                	Frame label="Controlador do Ventilador" {
                         Switch item=Bathroom_Fan label="Ligar" icon="fan"
-                        Text item=Countdown_Bathroom_Fan label="Temporizador [%d m]" icon="time"
+                        Text item=none label="" icon="none"
                         Text item=Bathroom_Temperature label="Temperatura [%.1f ºC]" icon="temperature"
                         Text item=Bathroom_Humidity label="Humidade [%.1f %%]" icon="humidity"
                 }
@@ -47,47 +46,31 @@ sitemap default label="Casa" {
                         Chart  item=BathroomHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
 		}
         }
-	Group item=MasterBedroom label="Quarto Grande" icon="bedroom" {
-		Frame label="Controlador do Aquecedor" {
-			Switch item=Masterbedroom_Heater label="Ligar" icon="heating"
-		}
-	}
-	Group item=Livingroom label="Sala" icon="sofa" {
-		Frame label="Controlador da Aparelhagem" {
-			Switch item=Livingroom_HiFi label="Ligar" icon="receiver"
-		}
-		Frame label="Controlador de Luzes" {
-			Switch item=Livingroom_Light_Support label="Ligar" icon="light"
-		}
-	}
-	Group item=Office label="Escritório" icon="office" {
-                Frame label="Controlador do Aquecedor" {
-                        Switch item=Office_Heater label="Ligar" icon="heating"
-                }
-		Frame label="Controlador do Desumificador" {
-                        Switch item=Office_Dehumi label="Ligar" icon="fan"
+	Group item=Studio label="Escritório" icon="office" {
+                Frame label="Controlador do Desumificador" {
+                        Switch item=Studio_Dehumi label="Ligar" icon="fan"
                         Text item=none label="" icon="none"
-                        Text item=Studio_Temperature label="Temperatura [%.1f ºC]" icon="temperature"
+                        Text item=Bathroom_Temperature label="Temperatura [%.1f ºC]" icon="temperature"
                         Text item=Bathroom_Humidity label="Humidade [%.1f %%]" icon="humidity"
-		}
 
-		Frame label="Grafico de Temperatura e Humidade" {
+			Frame label="Grafico de Temperatura e Humidade" {
                         Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
                                 7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
+			}
 
-                        Chart  item=OfficeTempSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
-                        Chart  item=OfficeTempSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
-                        Chart  item=OfficeTempSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
-                        Chart  item=OfficeTempSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
-                        Chart  item=OfficeTempSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
-                        Chart  item=OfficeTempSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
-                        Chart  item=OfficeTempSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
-                        Chart  item=OfficeTempSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
-                        Chart  item=OfficeTempSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
-                        Chart  item=OfficeTempSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
-                        Chart  item=OfficeTempSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
-                        Chart  item=OfficeTempSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
-                        Chart  item=OfficeTempSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+                        Chart  item=BathroomTempSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        Chart  item=BathroomTempSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        Chart  item=BathroomTempSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        Chart  item=BathroomTempSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        Chart  item=BathroomTempSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        Chart  item=BathroomTempSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        Chart  item=BathroomTempSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        Chart  item=BathroomTempSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        Chart  item=BathroomTempSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        Chart  item=BathroomTempSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        Chart  item=BathroomTempSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        Chart  item=BathroomTempSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        Chart  item=BathroomTempSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
 
                         Chart  item=BathroomHumidSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
                         Chart  item=BathroomHumidSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
@@ -103,35 +86,20 @@ sitemap default label="Casa" {
                         Chart  item=BathroomHumidSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
                         Chart  item=BathroomHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
                 }
+                }
 	}
     }
 	Frame {
-        Group item=gLight label="Luz" icon="light" {
-		Frame label="Controlar de Luzes" {
-			Switch item=gLight label="Todas as luzes" icon="light" mappings=[OFF="All Off", ON="All On"]
-		}
-                Frame label="Acender as Luzes" {
-			Switch item=Livingroom_Light_Support label="Luz de Apoio da Sala" icon="light"
-                }
-        }
-	Group item=gEquipment label="Equipamento" icon="switch" {
-		Frame label="Controlar Equipamento" {
-			Switch item=Livingroom_HiFi label="Sala" icon="receiver"
-		}
-	}
-        Group item=gHeater label="Aquecedores" icon="heating" {
-                Frame label="Controlar todos os Aquecedores" {
-                        Switch item=gHeater label="Todos os Aquecedores" icon="heating" mappings=[OFF="All Off", ON="All ON"]
-                }
-                Frame label="Ligar os Aquecedores" {
-                        Switch item=Masterbedroom_Heater label="Quarto Grande" icon="heating"
-			Switch item=Office_Heater label="Escritório" icon="heating"
-			Switch item=Bathroom_Towel_Heater label="Casa de Banho Grande" icon="heating"
-                }
-        }
+        //Group item=gLight label="Luz" icon="light" {
+	//	Frame label="Controlar todas as Luzes" {
+	//		Switch item=gLight label="Todas as luzes" icon="light" mappings=[OFF="All Off", ON="All On"]
+	//	}
+        //        Frame label="Acender as Luzes" {
+        //        }
+        //}
         Group item=gFan label="Ventiladores" icon="fan" {
 		Frame label="Controlar todos os Ventiladores" {
-			Switch item=gFan label="Todos os Ventiladores" icon="fan" mappings=[OFF="All Off", ON="All ON"]
+			Switch item=gFan label="Todos os Ventiladores" icon="light" mappings=[OFF="All Off", ON="All ON"]
 		}
                 Frame label="Ligar os Ventiladores" {
                         Switch item=Bathroom_Fan label="Casa de Banho Grande" icon="fan"
@@ -200,16 +168,6 @@ sitemap default label="Casa" {
 //                }
 //        }
 	}
-
-	Frame {
-		Text label="Configuração" icon="settings" {
-                	Frame label="Configuração dos temporizadores" {
-                        	Setpoint item=Bathroom_Towel_Heater_Timer label="Temporizador Aquecedor Toalhas [%d m]" minValue=0 maxValue=120 step=1                        
-				Setpoint item=Bathroom_Fan_Timer label="Temporizador Ventilador [%d m]" minValue=0 maxValue=120 step=1
-			}
-        	}
-	}
-
 	Frame label="Grafico de Consumo de Energia" {
                         Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
                                 7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]

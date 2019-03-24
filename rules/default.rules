@@ -4,6 +4,9 @@ import org.openhab.core.library.types.DateTimeType
 var Timer timerBathroomFan = null
 var Timer timerBathroomHeater = null
 
+var Number valueHeaterTowel = 0
+var Number valueFanBathroom = 0
+
 var DateTime RoofEnabled
 var DateTime RoofDisabled
 var long TimeEnabled
@@ -17,18 +20,40 @@ then
 	Date.postUpdate(new DateTimeType())
 end
 
+rule ShutdownEquipmentAtNight
+when
+	Time cron "0 0 0 * * ?"
+then
+	if (Masterbedroom_Heater.state == ON) {
+		sendCommand(Masterbedroom_Heater, OFF)
+	}
+	if (Office_Heater.state == ON) {
+		sendCommand(Office_Heater.state, OFF)
+	}
+	if (Bathroom_Towel_Heater.state == ON) {
+		sendCommand(Bathroom_Towel_Heater.state, OFF)
+	}
+	if (Livingroom_HiFi.state == ON) {
+		sendCommand(Livingroom_HiFi.state, OFF)
+	}
+end
+
 rule ControlHumidityInBathroomOnWeek
 when
 	Time cron "0 0/2 8-21 ? * MON-FRI"
 then
-	if ((Bathroom_Humidity.state >= 85) && (Bathroom_Fan.state == OFF)) {
+	valueFanBathroom = Bathroom_Fan_Timer.state as Number
+	if ((Bathroom_Humidity.state >= 90) && (Bathroom_Fan.state == OFF)) {
 		sendCommand(Bathroom_Fan, ON)
-	} else {
-		if ((Bathroom_Humidity.state < 80) && (Bathroom_Fan.state == ON)) {
-			timerBathroomFan = createTimer(now.plusSeconds(1800)) [|
-                                sendCommand(Bathroom_Fan, OFF)
-                                timerBathroomFan = null
-                        ]
+		timerBathroomFan = createTimer(now.plusMinutes(valueFanBathroom.intValue)) [|
+                	sendCommand(Bathroom_Fan, OFF)
+                        timerBathroomFan = null
+                ]
+		var count = valueFanBathroom
+		while(count >= 0) {
+			Countdown_Bathroom_Fan.postUpdate(count)
+			count = count - 1
+			Thread::sleep(60000)
 		}
 	}
 end
@@ -37,14 +62,18 @@ rule ControlHumidityInBathroomOnWeekend
 when
         Time cron "0 0/2 11-21 ? * SAT-SUN"
 then
-        if ((Bathroom_Humidity.state >= 85) && (Bathroom_Fan.state == OFF)) {
+	valueFanBathroom = Bathroom_Fan_Timer.state as Number
+        if ((Bathroom_Humidity.state >= 90) && (Bathroom_Fan.state == OFF)) {
                 sendCommand(Bathroom_Fan, ON)
-        } else {
-                if ((Bathroom_Humidity.state < 80) && (Bathroom_Fan.state == ON)) {
-                        timerBathroomFan = createTimer(now.plusSeconds(1800)) [|
-                                sendCommand(Bathroom_Fan, OFF)
-                                timerBathroomFan = null
-                        ]
+                timerBathroomFan = createTimer(now.plusMinutes(valueFanBathroom.intValue)) [|
+                	sendCommand(Bathroom_Fan, OFF)
+                        timerBathroomFan = null
+                ]
+		var count = valueFanBathroom
+                while(count >= 0) {
+                        Countdown_Bathroom_Fan.postUpdate(count)
+                        count = count - 1
+                        Thread::sleep(60000)
                 }
         }
 end
@@ -64,10 +93,17 @@ rule shutdownBathroomHeaterTowel
 when
 	Item Bathroom_Towel_Heater received update ON
 then
-	timerBathroomHeater = createTimer(now.plusSeconds(3600)) [|
+	valueHeaterTowel = Bathroom_Towel_Heater_Timer.state as Number
+	timerBathroomHeater = createTimer(now.plusMinutes(valueHeaterTowel.intValue)) [|
 		sendCommand(Bathroom_Towel_Heater, OFF)
 		timerBathroomHeater = null
 	]
+	var count = valueHeaterTowel
+	while(count >= 0) {
+		Countdown_Bathroom_Towel_Heater.postUpdate(count)
+		count = count - 1
+		Thread::sleep(60000)
+	}
 end
 
 rule "Startup Init"

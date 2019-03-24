@@ -5,6 +5,8 @@ Group:Switch:OR(ON,OFF)	gLight	"Luzes"	<light>	(Home)
 Group:Switch:OR(ON,OFF)	gFan	"Ventilador"	<fan>	(Home)
 Group:Switch:OR(ON,OFF) gHeater	"Aquecedor"	<heating>	(Home)
 Group:Switch:OR(ON,OFF) gDehumidity	"Desumidificador"	<humidity>	(Home)
+Group	gEquipment	"Equipamento"	<switch>	(Home)
+Group	gTimer	"Temporizador"	<time>	(Home)
 Group	gTemperature	"Temperatura"	<temperature>	(Home)
 Group	gHumidity	"Humidade"	<humidity>	(Home)
 
@@ -15,7 +17,7 @@ Group   Bedroom "Quarto Pequeno"        <bedroom>       (Home)
 // ##### Name to connect to Sonoff: kitchenSonoff
 Group   Kitchen "Cozinha"       <kitchen>       (Home)
 // ##### Name to connect to Sonoff: livingRoomSonoff
-Group   LivingRoom      "Sala"  <sofa>  (Home)
+Group   Livingroom      "Sala"  <sofa>  (Home)
 // ##### Name to connect to Sonoff: masterBedroomSonoff
 Group   MasterBedroom   "Quarto Grande" <bedroom_red>   (Home)
 // ##### Name to connect to Sonoff: studioSonoff
@@ -35,6 +37,7 @@ Number	EnergyTotal (HomeEnergyChart)
 
 Group	BathroomTempSensorChart (Home, Charts)
 Group	BathroomHumidSensorChart (Home, Charts)
+Group	OfficeTempSensorChart	(Home, Charts)
 
 // ##### FOR CONSTRUCT THE CHART  #####
 Number HomeSensorChartPeriod "Periodo" (Home)
@@ -42,6 +45,15 @@ Number ValuesBathroomTemp       "Temperatura WC Grande [%.2f ºC]" <temperature>
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
 Number ValuesBathroomHumid       "Humidade WC Grande [%.2f %%]" <humidity> (BathroomHumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
+Number ValuesOfficeTemp    "Temperatura Escritorio [%.2f ºC]"   <temperature>   (OfficeTempSensorChart)
+        {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.DS18B20.Temperature)]"}
+
+// ##### DEFINITION OF THE TIMERS #####
+Number Bathroom_Towel_Heater_Timer "Temporizador Aquecedor Toalhas" <heating> (Bathroom, gTimer)
+Number Bathroom_Fan_Timer "Temporizador Ventilador" <fan> (Bathroom, gTimer)
+
+Number Countdown_Bathroom_Towel_Heater "Temporizador" <time> (Bathroom)
+Number Countdown_Bathroom_Fan "Temporizador" <time> (Bathroom)
 
 // ##### FOR BLANK PURPOSE #####
 Number none "" (Home)
@@ -66,10 +78,18 @@ Switch	Office_Dehumi	"Desumidificador"	<humidity>	(Office, gDehumidity)
 Number  Bathroom_Temperature    "Temperatura"   <temperature>   (Bathroom, gTemperature, BathroomTempSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
 Number  Studio_Temperature    "Temperatura"   <temperature>   (Studio, gTemperature)
-//        {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
+        {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.DS18B20.Temperature)]"}
 	
 // ##### DEFINITION OF ALL HUMIDITY SENSOR #####
 Number  Bathroom_Humidity       "Humidade"      <humidity>      (Bathroom, gHumidity, BathroomHumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
 Number  Studio_Humidity       "Humidade"      <humidity>      (Studio, gHumidity)
 //        {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
+
+// ##### DEFINITION OF ALL LIGHT SENSOR #####
+Switch	Livingroom_Light_Support	"Luz de Apoio"	<lightbulb>	(Livingroom, gLight)
+	{mqtt=">[broker:cmnd/LivingroomLightSupportSonoff/POWER:command:*:default], <[broker:stat/LivingroomLightSupportSonoff/POWER:state:default]"}
+
+// ##### DEFINITION OF OTHERS EQUIPMENT #####
+Switch	Livingroom_HiFi	"Aparelhagem"	<receiver>	(Livingroom, gEquipment)
+	{mqtt=">[broker:cmnd/LivingroomHiFiSonoff/POWER:command:*:default], <[broker:stat/LivingroomHiFiSonoff/POWER:state:default]"}
