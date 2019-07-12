@@ -1,3 +1,6 @@
+// ##### DEFINITION OF THE IMPORTS #####
+//import masterbedroom.items
+
 // ##### DEFINITION OF THE HOUSE STRUCTURE #####
 Group Home "Casa" <group>
 
@@ -38,15 +41,20 @@ Number	EnergyTotal (HomeEnergyChart)
 Group	BathroomTempSensorChart (Home, Charts)
 Group	BathroomHumidSensorChart (Home, Charts)
 Group	OfficeTempSensorChart	(Home, Charts)
+Group	OfficeHumidSensorChart (Home, Charts)
+Group	TempSensorChart		(Home, Charts)
+Group	HumidSensorChart	(Home, Charts)
 
 // ##### FOR CONSTRUCT THE CHART  #####
 Number HomeSensorChartPeriod "Periodo" (Home)
-Number ValuesBathroomTemp       "Temperatura WC Grande [%.2f ºC]" <temperature> (BathroomTempSensorChart)
+Number ValuesBathroomTemp       "Temperatura WC Grande [%.2f ºC]" <temperature> (BathroomTempSensorChart, TempSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
-Number ValuesBathroomHumid       "Humidade WC Grande [%.2f %%]" <humidity> (BathroomHumidSensorChart)
+Number ValuesBathroomHumid       "Humidade WC Grande [%.2f %%]" <humidity> (BathroomHumidSensorChart, HumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
-Number ValuesOfficeTemp    "Temperatura Escritorio [%.2f ºC]"   <temperature>   (OfficeTempSensorChart)
-        {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.DS18B20.Temperature)]"}
+Number ValuesOfficeTemp    "Temperatura Escritorio [%.2f ºC]"   <temperature>   (OfficeTempSensorChart, TempSensorChart)
+        {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
+Number ValuesOfficeHumid "Humidade Escritorio [%.2f %%]" <humidity> (OfficeHumidSensorChart, HumidSensorChart)
+	{mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
 
 // ##### DEFINITION OF THE TIMERS #####
 Number Bathroom_Towel_Heater_Timer "Temporizador Aquecedor Toalhas" <heating> (Bathroom, gTimer)
@@ -77,14 +85,14 @@ Switch	Office_Dehumi	"Desumidificador"	<humidity>	(Office, gDehumidity)
 // ##### DEFINITION OF ALL TEMPERATURE SENSOR #####
 Number  Bathroom_Temperature    "Temperatura"   <temperature>   (Bathroom, gTemperature, BathroomTempSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
-Number  Studio_Temperature    "Temperatura"   <temperature>   (Studio, gTemperature)
-        {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.DS18B20.Temperature)]"}
+Number  Studio_Temperature    "Temperatura"   <temperature>   (Studio, gTemperature, OfficeTempSensorChart)
+        {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
 	
 // ##### DEFINITION OF ALL HUMIDITY SENSOR #####
 Number  Bathroom_Humidity       "Humidade"      <humidity>      (Bathroom, gHumidity, BathroomHumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
 Number  Studio_Humidity       "Humidade"      <humidity>      (Studio, gHumidity)
-//        {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
+        {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
 
 // ##### DEFINITION OF ALL LIGHT SENSOR #####
 Switch	Livingroom_Light_Support	"Luz de Apoio"	<lightbulb>	(Livingroom, gLight)
