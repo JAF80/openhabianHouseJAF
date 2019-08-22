@@ -113,3 +113,4 @@ String	Bedroom_Door_Detector "Sensor Porta aberta"	<door>	(Bedroom)
 Switch	Bedroom_Door_Detector_Value "Detector de Porta Aberta"	<door>	(Bedroom)
 String	ButtonTest	"Botão Test"	<switch>	(Office)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
+String	ButtonTest_Value	"Botão Teste"	<switch>	(Office)
