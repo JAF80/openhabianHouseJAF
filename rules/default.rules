@@ -170,3 +170,18 @@ then
                 ]
         }
 end
+
+rule ButtonTestRule
+when
+	Item ButtonTest received update
+then
+	if (ButtonTest.state == "") {
+		if (ButtonTest_value.state == ON) {
+			sendCommand(Storageroom_Light, OFF)
+			sendCommand(ButtonTest_value, OFF)
+		} else {
+			sendCommand(Storageroom_Light, ON)
+			sendCommand(ButtonTest_value, ON)
+		}
+	}
+end
