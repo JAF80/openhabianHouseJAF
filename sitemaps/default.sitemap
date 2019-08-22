@@ -73,7 +73,7 @@ sitemap default label="Casa" {
                         Text item=Studio_Humidity label="Humidade [%.2f %%]" icon="humidity"
 		}
 		Frame label="Botão Test"  {
-			Switch item=ButtonTest	label="Botão"	icon="switch"
+			Switch item=ButtonTest_Value	label="Botão"	icon="switch"
 		}
 
 		Frame label="Grafico de Temperatura e Humidade" {
