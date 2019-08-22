@@ -1,3 +1,4 @@
+
 import org.openhab.model.script.actions.Timer
 import org.openhab.core.library.types.DateTimeType
 
@@ -88,11 +89,12 @@ when
 then
 	if (Bathroom_Fan.state == ON) {
 		sendCommand(Bathroom_Fan, OFF)
-		timerBathroomFan = null
+//		timerBathroomFan.cancel()
+//		timerBathroomFan = null
 	}
 end
 
-rule ShutdownBathroomHeaterTowel
+rule shutdownBathroomHeaterTowel
 when
 	Item Bathroom_Towel_Heater received update ON
 then
@@ -142,18 +144,16 @@ when
 then
 	valueLightStorageroom = Storageroom_Light_Timer.state as Number
 	if (StorageRoom_PIR.state == "EDFCDE") {
-		if (Storageroom_Light.state == OFF) {
-			sendCommand(Storageroom_Light, ON)
-			timerStorageroomLight = createTimer(now.plusMinutes(valueLightStorageroom.intValue)) [|
-				sendCommand(Storageroom_Light, OFF)
-				timerStorageroomLight = null
-			]
-			var count = valueLightStorageroom
-			while(count >= 0) {
-				Countdown_Storageroom_Light.postUpdate(count)
-				count = count - 1
-				Thread::sleep(60000)
-			}
+		sendCommand(Storageroom_Light, ON)
+		timerStorageroomLight = createTimer(now.plusMinutes(valueLightStorageroom.intValue)) [|
+			sendCommand(Storageroom_Light, OFF)
+			timerStorageroomLight = null
+		]
+		var count = valueLightStorageroom
+		while(count >= 0) {
+			Countdown_Storageroom_Light.postUpdate(count)
+			count = count - 1
+			Thread::sleep(60000)
 		}
 	}
 end

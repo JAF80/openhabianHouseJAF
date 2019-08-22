@@ -57,6 +57,11 @@ sitemap default label="Casa" {
 			Switch item=Livingroom_Light_Support label="Ligar" icon="light"
 		}
 	}
+	Group item=Bedroom label="Quarto Pequeno" icon="bedroom" {
+		Frame label="Detector porta aberta" {
+			Switch item=Bedroom_Door_Detector_Value label="Aberto" icon="door"
+		}
+	}
 	Group item=Office label="Escritório" icon="office" {
                 Frame label="Controlador do Aquecedor" {
                         Switch item=Office_Heater label="Ligar" icon="heating"
@@ -99,6 +104,12 @@ sitemap default label="Casa" {
                         Chart  item=OfficeHumidSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
                         Chart  item=OfficeHumidSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
                         Chart  item=OfficeHumidSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+                }
+	}
+	Group item=Storageroom label="Despensa" icon="suitcase" {
+		Frame label="Controlador de Luz" {
+			Switch item=Storageroom_Light label="Ligar" icon="light"
+                        Text item=Countdown_Storageroom_Light label="Temporizador [%d m]" icon="time"
                 }
 	}
     }
@@ -205,6 +216,7 @@ sitemap default label="Casa" {
                 	Frame label="Configuração dos temporizadores" {
                         	Setpoint item=Bathroom_Towel_Heater_Timer label="Temporizador Aquecedor Toalhas [%d m]" minValue=0 maxValue=120 step=1                        
 				Setpoint item=Bathroom_Fan_Timer label="Temporizador Ventilador [%d m]" minValue=0 maxValue=120 step=1
+				Setpoint item=Storageroom_Light_Timer label="Temporizador Luz Despensa [%d m]" minValue=0 maxValue=30 step=1
 			}
         	}
 	}

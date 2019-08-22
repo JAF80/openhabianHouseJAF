@@ -30,9 +30,10 @@ Group   Toilet  "WC Pequeno"    <toilet>        (Home)
 // ##### Name to connect to Sonoff: hallwaySonoff
 Group   Hallway "Entrada"       <corridor>      (Home)
 // ##### Name to connect to Sonoff: storageRoomSonoff
-Group   StorageRoom     "Despensa"      <suitcase>      (Home)
+Group   Storageroom     "Despensa"      <suitcase>      (Home)
 // ##### Name to connect to Sonoff: stairwell
 Group	Stairwell	"Luz da Escada"	<suitcase>	(Home)
+
 Group   WeatherCasting  "Metereologia"  <climate>       (Home)
 
 Group	HomeEnergyChart	(Home, Charts)
@@ -59,9 +60,11 @@ Number ValuesOfficeHumid "Humidade Escritorio [%.2f %%]" <humidity> (OfficeHumid
 // ##### DEFINITION OF THE TIMERS #####
 Number Bathroom_Towel_Heater_Timer "Temporizador Aquecedor Toalhas" <heating> (Bathroom, gTimer)
 Number Bathroom_Fan_Timer "Temporizador Ventilador" <fan> (Bathroom, gTimer)
+Number Storageroom_Light_Timer "Temporizador Luz Despensa" <light> (Storageroom, gTimer)
 
 Number Countdown_Bathroom_Towel_Heater "Temporizador" <time> (Bathroom)
 Number Countdown_Bathroom_Fan "Temporizador" <time> (Bathroom)
+Number Countdown_Storageroom_Light "Temporizador" <time> (Bathroom)
 
 // ##### FOR BLANK PURPOSE #####
 Number none "" (Home)
@@ -97,7 +100,16 @@ Number  Studio_Humidity       "Humidade"      <humidity>      (Studio, gHumidity
 // ##### DEFINITION OF ALL LIGHT SENSOR #####
 Switch	Livingroom_Light_Support	"Luz de Apoio"	<lightbulb>	(Livingroom, gLight)
 	{mqtt=">[broker:cmnd/LivingroomLightSupportSonoff/POWER:command:*:default], <[broker:stat/LivingroomLightSupportSonoff/POWER:state:default]"}
+Switch	Storageroom_Light	"Luz da Despensa"	<light>	(Storageroom, gLight)
+	{mqtt=">[broker:cmnd/StorageroomLightSonoff/POWER:command:*:default], <[broker:stat/StorageroomLightSonoff/POWER:state:default]"}
 
 // ##### DEFINITION OF OTHERS EQUIPMENT #####
 Switch	Livingroom_HiFi	"Aparelhagem"	<receiver>	(Livingroom, gEquipment)
 	{mqtt=">[broker:cmnd/LivingroomHiFiSonoff/POWER:command:*:default], <[broker:stat/LivingroomHiFiSonoff/POWER:state:default]"}
+
+// ##### DEFINITION OF RF BRIDGE SENSORS #####
+String	StorageRoom_PIR	"Sensor PIR Despensa [%s]"	<motion>	(Storageroom)
+	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
+String	Bedroom_Door_Detector "Sensor Porta aberta"	<door>	(Bedroom)
+	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
+Switch	Bedroom_Door_Detector_Value "Detector de Porta Aberta"	<door>	(Bedroom)
