@@ -1,6 +1,3 @@
-// ##### DEFINITION OF THE IMPORTS #####
-//import masterbedroom.items
-
 // ##### DEFINITION OF THE HOUSE STRUCTURE #####
 Group Home "Casa" <group>
 
@@ -8,13 +5,14 @@ Group:Switch:OR(ON,OFF)	gLight	"Luzes"	<light>	(Home)
 Group:Switch:OR(ON,OFF)	gFan	"Ventilador"	<fan>	(Home)
 Group:Switch:OR(ON,OFF) gHeater	"Aquecedor"	<heating>	(Home)
 Group:Switch:OR(ON,OFF) gDehumidity	"Desumidificador"	<humidity>	(Home)
+
 Group	gEquipment	"Equipamento"	<switch>	(Home)
 Group	gTimer	"Temporizador"	<time>	(Home)
 Group	gTemperature	"Temperatura"	<temperature>	(Home)
 Group	gHumidity	"Humidade"	<humidity>	(Home)
 
 // ##### Name to connect to Sonoff: bathroomSonoff
-Group   Bathroom        "WC Grande"     <bath>  (Home)
+Group   Bathroom	"WC Grande"	<bath>	(Home)
 // ##### Name to connect to Sonoff: bedroomSonoff
 Group   Bedroom "Quarto Pequeno"        <bedroom>       (Home)
 // ##### Name to connect to Sonoff: kitchenSonoff
@@ -113,3 +111,5 @@ String	StorageRoom_PIR	"Sensor PIR Despensa [%s]"	<motion>	(Storageroom)
 String	Bedroom_Door_Detector "Sensor Porta aberta"	<door>	(Bedroom)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
 Switch	Bedroom_Door_Detector_Value "Detector de Porta Aberta"	<door>	(Bedroom)
+String	ButtonTest	"Botão Test"	<switch>	(Office)
+	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
