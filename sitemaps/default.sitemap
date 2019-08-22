@@ -72,6 +72,9 @@ sitemap default label="Casa" {
                         Text item=Studio_Temperature label="Temperatura [%.2f ºC]" icon="temperature"
                         Text item=Studio_Humidity label="Humidade [%.2f %%]" icon="humidity"
 		}
+		Frame label="Botão Test"  {
+			Switch item=ButtonTest	label="Botão"	icon="switch"
+		}
 
 		Frame label="Grafico de Temperatura e Humidade" {
                         Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
