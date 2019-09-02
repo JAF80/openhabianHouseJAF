@@ -11,6 +11,9 @@ Group	gTimer	"Temporizador"	<time>	(Home)
 Group	gTemperature	"Temperatura"	<temperature>	(Home)
 Group	gHumidity	"Humidade"	<humidity>	(Home)
 
+// ##### Cell Phones connected to OpenHabian
+Group:Switch:OR(ON, OFF)	gPresence	"gPresence"	<icon_presence>
+
 // ##### Name to connect to Sonoff: bathroomSonoff
 Group   Bathroom	"WC Grande"	<bath>	(Home)
 // ##### Name to connect to Sonoff: bedroomSonoff
@@ -100,12 +103,16 @@ Switch	Livingroom_Light_Support	"Luz de Apoio"	<lightbulb>	(Livingroom, gLight)
 	{mqtt=">[broker:cmnd/LivingroomLightSupportSonoff/POWER:command:*:default], <[broker:stat/LivingroomLightSupportSonoff/POWER:state:default]"}
 Switch	Storageroom_Light	"Luz da Despensa"	<light>	(Storageroom, gLight)
 	{mqtt=">[broker:cmnd/StorageroomLightSonoff/POWER:command:*:default], <[broker:stat/StorageroomLightSonoff/POWER:state:default]"}
+Switch	Masterbedroom_Light	"Luz do Quarto Grande"	<light>	(MasterBedroom, gLight)
+	{mqtt=">[broker:cmnd/MasterbedroomLightSonoff/POWER:command:*:default], <[broker:stat/MasterbedroomLightSonoff/POWER:state:default]"}
 
 // ##### DEFINITION OF OTHERS EQUIPMENT #####
 Switch	Livingroom_HiFi	"Aparelhagem"	<receiver>	(Livingroom, gEquipment)
 	{mqtt=">[broker:cmnd/LivingroomHiFiSonoff/POWER:command:*:default], <[broker:stat/LivingroomHiFiSonoff/POWER:state:default]"}
 
 // ##### DEFINITION OF RF BRIDGE SENSORS #####
+String	RF_Message "Mensagem RF"	<text>	(Home)
+	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
 String	StorageRoom_PIR	"Sensor PIR Despensa [%s]"	<motion>	(Storageroom)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
 String	Bedroom_Door_Detector "Sensor Porta aberta"	<door>	(Bedroom)

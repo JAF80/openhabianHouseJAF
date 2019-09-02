@@ -1,5 +1,17 @@
 sitemap default label="Casa" {
-    Frame {
+    Frame label="Avisos" {
+	Text item=gLight label="Existem Luzes Acessas" icon="light"
+	Text item=gHeater label="Existem Aquecedores Ligados" icon="heating"
+    }
+    Frame label="Presence" {
+	Switch item=gPresence icon="parents_1_1" label="Presence"
+	//Text item=none label="" icon="none"
+	Text label="People" icon="parents_1_1"
+		{
+			Switch item=JAF_Cell_Phone_Online icon="boy_3" label="JAF"
+		}
+    }
+    Frame label="Divisões da casa" {
 	Group item=Bathroom label="Casa de Banho Grande" icon="bath" {
                 Frame label="Aquecedor Toalha" {
                         Switch item=Bathroom_Towel_Heater label="Ligar" icon="heating"
@@ -45,6 +57,9 @@ sitemap default label="Casa" {
 		}
         }
 	Group item=MasterBedroom label="Quarto Grande" icon="bedroom_red" {
+		Frame label="Controlador de Luzes" {
+			Switch item=Masterbedroom_Light label="Ligar" icon="light"
+		}
 		Frame label="Controlador do Aquecedor" {
 			Switch item=Masterbedroom_Heater label="Ligar" icon="heating"
 		}
@@ -116,13 +131,15 @@ sitemap default label="Casa" {
                 }
 	}
     }
-	Frame {
+	Frame label="Controlo dos dispositivos por grupos" {
         Group item=gLight label="Luz" icon="light" {
 		Frame label="Controlar de Luzes" {
 			Switch item=gLight label="Todas as luzes" icon="light" mappings=[OFF="All Off", ON="All On"]
 		}
                 Frame label="Acender as Luzes" {
 			Switch item=Livingroom_Light_Support label="Luz de Apoio da Sala" icon="light"
+			Switch item=Storageroom_Light label="Luz da despensa" icon="light"
+			Switch item=Masterbedroom_Light label="Luz do Quarto Grande" icon="light"
                 }
         }
 	Group item=gEquipment label="Equipamento" icon="switch" {
@@ -214,12 +231,12 @@ sitemap default label="Casa" {
 //        }
 	}
 
-	Frame {
-		Text label="Configuração" icon="settings" {
+	Frame label="Configuração das opções dos dispositivos" {
+		Text label="Temporizadores" icon="settings" {
                 	Frame label="Configuração dos temporizadores" {
-                        	Setpoint item=Bathroom_Towel_Heater_Timer label="Temporizador Aquecedor Toalhas [%d m]" minValue=0 maxValue=120 step=1                        
-				Setpoint item=Bathroom_Fan_Timer label="Temporizador Ventilador [%d m]" minValue=0 maxValue=120 step=1
-				Setpoint item=Storageroom_Light_Timer label="Temporizador Luz Despensa [%d m]" minValue=0 maxValue=30 step=1
+                        	Setpoint item=Bathroom_Towel_Heater_Timer label="Aquecedor Toalhas [%d m]" minValue=0 maxValue=120 step=1                        
+				Setpoint item=Bathroom_Fan_Timer label="Ventilador [%d m]" minValue=0 maxValue=120 step=1
+				Setpoint item=Storageroom_Light_Timer label="Luz Despensa [%d m]" minValue=0 maxValue=30 step=1
 			}
         	}
 	}
