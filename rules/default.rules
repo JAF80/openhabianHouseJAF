@@ -141,7 +141,8 @@ when
 	Item StorageRoom_PIR received update
 then
 	valueLightStorageroom = Storageroom_Light_Timer.state as Number
-	if (StorageRoom_PIR.state == "EDFCDE") {
+
+	if (RF_Message.state == "EDFCDE") {
 		if (Storageroom_Light.state == OFF) {
 			sendCommand(Storageroom_Light, ON)
 			timerStorageroomLight = createTimer(now.plusMinutes(valueLightStorageroom.intValue)) [|
@@ -156,32 +157,33 @@ then
 			}
 		}
 	}
-end
+	
+	if (RF_Message.state == "3010A2") {
+		if (Storageroom_Light.state == OFF) {
+			sendCommand(Storageroom_Light, ON)
+		} else {
+			if (Storageroom_Light.state == ON) {
+				sendCommand(Storageroom_Light, OFF)
+			}
+		}
+	}
 
-rule DoorSensorActivated
-when
-        Item Bedroom_Door_Detector received update
-then
-        if (Bedroom_Door_Detector.state == "A8B4B9") {
+	if (RF_Message.state == "A8B4B9") {
                 sendCommand(Bedroom_Door_Detector_Value, ON)
-		timerBedroomDoor = createTimer(now.plusMinutes(valueDoorBedroom.intValue)) [|
+                timerBedroomDoor = createTimer(now.plusMinutes(valueDoorBedroom.intValue)) [|
                         sendCommand(Bedroom_Door_Detector_Value, OFF)
                         timerStorageroomLight = null
                 ]
         }
 end
 
-rule ButtonTestRule
+rule UserOutOfHouse
 when
-	Item ButtonTest received update
+	Item gPresence changed to OFF
 then
-	if (ButtonTest.state == "") {
-		if (ButtonTest_value.state == ON) {
-			sendCommand(Storageroom_Light, OFF)
-			sendCommand(ButtonTest_value, OFF)
-		} else {
-			sendCommand(Storageroom_Light, ON)
-			sendCommand(ButtonTest_value, ON)
-		}
-	}
+	sendCommand(Office_Heater, OFF)
+	sendCommand(Masterbedroom_Heater, OFF)
+	sendCommand(Livingroom_Light_Support, OFF)
+	sendCommand(Livingroom_HiFi, OFF)
+	sendCommand(Masterbedroom_Light, OFF)
 end
