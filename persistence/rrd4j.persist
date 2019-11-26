@@ -14,6 +14,8 @@ Items {
 	BathroomHumidSensorChar* : strategy = everyUpdate, everyMinute
 	OfficeTempSensorChar* : strategy = everyUpdate, everyMinute
 	OfficeHumidSensorChar* : strategy = everyUpdate, everyMinute
+	MasterbedroomTempSensorChar* : strategy = everyUpdate, everyMinute
+	MasterbedroomHumidSensorChar* : strategy = everyUpdate, everyMinute
 	TempSensorChart* : strategy = everyUpdate, everyMinute
 	HumidSensorChart* : strategy = everyUpdate, everyMinute
 	HomeEnergyChart* : strategy = everyUpdate, everyMinute
@@ -22,5 +24,7 @@ Items {
 	ValuesBathroomHumid : strategy = everyUpdate, everyMinute
 	ValuesOfficeTemp : strategy = everyUpdate, everyMinute
 	ValuesOfficeHumid : strategy = everyUpdate, everyMinute
+	ValuesMasterbedroomTemp : strategy = everyUpdate, everyMinute
+        ValuesMasterbedroomHumid : strategy = everyUpdate, everyMinute
 	EnergyTotal : strategy = everyUpdate, everyMinute
 }

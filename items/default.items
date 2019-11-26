@@ -44,6 +44,8 @@ Group	BathroomTempSensorChart (Home, Charts)
 Group	BathroomHumidSensorChart (Home, Charts)
 Group	OfficeTempSensorChart	(Home, Charts)
 Group	OfficeHumidSensorChart (Home, Charts)
+Group	MasterbedroomTempSensorChart	(Home, Charts)
+Group	MasterbedroomHumidSensorChart	(Home, Charts)
 Group	TempSensorChart		(Home, Charts)
 Group	HumidSensorChart	(Home, Charts)
 
@@ -57,12 +59,16 @@ Number ValuesOfficeTemp    "Temperatura Escritorio [%.2f ºC]"   <temperature>  
         {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
 Number ValuesOfficeHumid "Humidade Escritorio [%.2f %%]" <humidity> (OfficeHumidSensorChart, HumidSensorChart)
 	{mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
+Number ValuesMasterbedroomTemp    "Temperatura Quarto Grande [%.2f ºC]"   <temperature>   (MasterbedroomTempSensorChart, TempSensorChart)
+        {mqtt="<[broker:tele/MasterbedroomTempSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
+Number ValuesMasterbedroomHumid "Humidade Quarto Grande [%.2f %%]" <humidity> (MasterbedroomHumidSensorChart, HumidSensorChart)
+        {mqtt="<[broker:tele/MasterbedroomTempSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
+
 
 // ##### DEFINITION OF THE TIMERS #####
 Number Bathroom_Towel_Heater_Timer "Temporizador Aquecedor Toalhas" <heating> (Bathroom, gTimer)
 Number Bathroom_Fan_Timer "Temporizador Ventilador" <fan> (Bathroom, gTimer)
 Number Storageroom_Light_Timer "Temporizador Luz Despensa" <light> (Storageroom, gTimer)
-
 Number Countdown_Bathroom_Towel_Heater "Temporizador" <time> (Bathroom)
 Number Countdown_Bathroom_Fan "Temporizador" <time> (Bathroom)
 Number Countdown_Storageroom_Light "Temporizador" <time> (Bathroom)
@@ -75,8 +81,11 @@ Switch	Bathroom_Towel_Heater	"Aquecedor Toalha"	<heating>	(Bathroom, gHeater)
 	{mqtt=">[broker:cmnd/BathroomHeaterSonoff/POWER:command:*:default], <[broker:stat/BathroomHeaterSonoff/POWER:state:default]"}
 Switch  Office_Heater   "Aquecedor Toalha"      <heating>       (Office, gHeater)
         {mqtt=">[broker:cmnd/OfficeHeaterSonoff/POWER:command:*:default], <[broker:stat/OfficeHeaterSonoff/POWER:state:default]"}
-Switch  Masterbedroom_Heater   "Aquecedor Toalha"      <heating>       (MasterBedroom, gHeater)
+Switch  Masterbedroom_Heater   "Aquecedor Quarto Grande"      <heating>       (MasterBedroom, gHeater)
         {mqtt=">[broker:cmnd/MasterbedroomHeaterSonoff/POWER:command:*:default], <[broker:stat/MasterbedroomHeaterSonoff/POWER:state:default]"}
+Switch  Smallbedroom_Heater   "Aquecedor Quarto Pequeno"      <heating>       (Bedroom, gHeater)
+        {mqtt=">[broker:cmnd/SmallbedroomHeaterSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomHeaterSonoff/POWER:state:default]"}
+
 		 
 // ##### DEFINITION OF ALL FAN #####
 Switch  Bathroom_Fan    "Ventoinha"     <fan>   (Bathroom, gFan)
@@ -91,12 +100,18 @@ Number  Bathroom_Temperature    "Temperatura"   <temperature>   (Bathroom, gTemp
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
 Number  Studio_Temperature    "Temperatura"   <temperature>   (Studio, gTemperature, OfficeTempSensorChart)
         {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
+Number  Masterbedroom_Temperature    "Temperatura"   <temperature>   (MasterBedroom, gTemperature, MasterbedroomTempSensorChart)
+        {mqtt="<[broker:tele/MasterbedroomTempSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
+
 	
 // ##### DEFINITION OF ALL HUMIDITY SENSOR #####
 Number  Bathroom_Humidity       "Humidade"      <humidity>      (Bathroom, gHumidity, BathroomHumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
-Number  Studio_Humidity       "Humidade"      <humidity>      (Studio, gHumidity)
+Number  Studio_Humidity       "Humidade"      <humidity>      (Studio, gHumidity, OfficeHumidSensorChart)
         {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
+Number  Masterbedroom_Humidity       "Humidade"      <humidity>      (Studio, gHumidity, MasterbedroomHumidSensorChart)
+        {mqtt="<[broker:tele/MasterbedroomTempSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
+
 
 // ##### DEFINITION OF ALL LIGHT SENSOR #####
 Switch	Livingroom_Light_Support	"Luz de Apoio"	<lightbulb>	(Livingroom, gLight)
@@ -105,6 +120,9 @@ Switch	Storageroom_Light	"Luz da Despensa"	<light>	(Storageroom, gLight)
 	{mqtt=">[broker:cmnd/StorageroomLightSonoff/POWER:command:*:default], <[broker:stat/StorageroomLightSonoff/POWER:state:default]"}
 Switch	Masterbedroom_Light	"Luz do Quarto Grande"	<light>	(MasterBedroom, gLight)
 	{mqtt=">[broker:cmnd/MasterbedroomLightSonoff/POWER:command:*:default], <[broker:stat/MasterbedroomLightSonoff/POWER:state:default]"}
+Switch  Smallbedroom_Light_Sound     "Luz/Som do Quarto Pequeno"  <light> (Bedroom, gLight)
+        {mqtt=">[broker:cmnd/SmallbedroomLightSoundSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomLightSoundSonoff/POWER:state:default]"}
+
 
 // ##### DEFINITION OF OTHERS EQUIPMENT #####
 Switch	Livingroom_HiFi	"Aparelhagem"	<receiver>	(Livingroom, gEquipment)

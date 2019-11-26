@@ -17,6 +17,8 @@ var long TimeEnabled
 var float Energy
 var float Power = 10
 
+var initValue = 35
+
 rule SetDay
 when
 	System started or Time is midnight
@@ -34,6 +36,9 @@ then
 	if (Office_Heater.state == ON) {
 		sendCommand(Office_Heater.state, OFF)
 	}
+	if (Smallbedroom_Heater.state == ON) {
+		sendCommand(Smallbedroom_Heater.state, OFF)
+	}
 	if (Bathroom_Towel_Heater.state == ON) {
 		sendCommand(Bathroom_Towel_Heater.state, OFF)
 	}
@@ -46,6 +51,8 @@ rule ControlHumidityInBathroomOnWeek
 when
 	Time cron "0 0/2 8-21 ? * MON-FRI"
 then
+	Bathroom_Fan_Timer.postUpdate(initValue)
+
 	valueFanBathroom = Bathroom_Fan_Timer.state as Number
 	if ((Bathroom_Humidity.state >= 90) && (Bathroom_Fan.state == OFF)) {
 		sendCommand(Bathroom_Fan, ON)
