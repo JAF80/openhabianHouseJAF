@@ -120,9 +120,12 @@ Switch	Storageroom_Light	"Luz da Despensa"	<light>	(Storageroom, gLight)
 	{mqtt=">[broker:cmnd/StorageroomLightSonoff/POWER:command:*:default], <[broker:stat/StorageroomLightSonoff/POWER:state:default]"}
 Switch	Masterbedroom_Light	"Luz do Quarto Grande"	<light>	(MasterBedroom, gLight)
 	{mqtt=">[broker:cmnd/MasterbedroomLightSonoff/POWER:command:*:default], <[broker:stat/MasterbedroomLightSonoff/POWER:state:default]"}
+<<<<<<< HEAD
 Switch  Smallbedroom_Light_Sound     "Luz/Som do Quarto Pequeno"  <light> (Bedroom, gLight)
         {mqtt=">[broker:cmnd/SmallbedroomLightSoundSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomLightSoundSonoff/POWER:state:default]"}
 
+=======
+>>>>>>> fb9b765a832bdc952791cac37dde22edab26224f
 
 // ##### DEFINITION OF OTHERS EQUIPMENT #####
 Switch	Livingroom_HiFi	"Aparelhagem"	<receiver>	(Livingroom, gEquipment)

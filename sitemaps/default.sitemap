@@ -5,6 +5,10 @@ sitemap default label="Casa" {
     }
     Frame label="Presence" {
 	Switch item=gPresence icon="parents_1_1" label="Presence"
+<<<<<<< HEAD
+=======
+	//Text item=none label="" icon="none"
+>>>>>>> fb9b765a832bdc952791cac37dde22edab26224f
 	Text label="People" icon="parents_1_1"
 		{
 			Switch item=JAF_Cell_Phone_Online icon="boy_3" label="JAF"
@@ -182,7 +186,10 @@ sitemap default label="Casa" {
 			Switch item=Livingroom_Light_Support label="Luz de Apoio da Sala" icon="light"
 			Switch item=Storageroom_Light label="Luz da despensa" icon="light"
 			Switch item=Masterbedroom_Light label="Luz do Quarto Grande" icon="light"
+<<<<<<< HEAD
 			Switch item=Smallbedroom_Light_Sound label="Luz/Som do Quarto Pequeno" icon="light"
+=======
+>>>>>>> fb9b765a832bdc952791cac37dde22edab26224f
                 }
         }
 	Group item=gEquipment label="Equipamento" icon="switch" {
