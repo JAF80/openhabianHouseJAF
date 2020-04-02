@@ -11,8 +11,6 @@ var Number valueFanBathroom = 0
 var Number valueLightStorageroom = 0
 var Number valueDoorBedroom = 1
 
-var avgTemp = 20
-
 var DateTime RoofEnabled
 var DateTime RoofDisabled
 var long TimeEnabled
@@ -20,30 +18,18 @@ var float Energy
 var float Power = 10
 
 var HomeSensorChartPeriod = 0
-var Number InitValueHour = 60
-var Number InitValueHalfHour = 30
-var Number InitValueTenMinutes = 10
-var Number InitValueFiveMinutes = 5
+var FanCounter = 0
+var InitValueHour = 60
+var InitValueHalfHour = 30
+var InitValueTenMinutes = 10
+var InitValueFiveMinutes = 5
 
 rule SetDay
 when
 	System started or Time is midnight
 then
 	Date.postUpdate(new DateTimeType())
-end
-
-rule SystemStarted
-when
-        System started
-then
-        var value = 20
-        TempAverage.postUpdate(value)
-        //RoofEnabled = now
-        //RoofDisabled = now
-        //TimeEnabled = 0
-        //Energy = TimeEnabled/1000 * Power
-        //Energy = Energy/3600
-        //EnergyTotal.postUpdate(Energy)
+	FanCounter = 0
 end
 
 rule ShutdownEquipmentAtNight
@@ -67,33 +53,19 @@ then
 	}
 end
 
-rule UpdateTemperatureAverage
-when
-	Time cron "0 0 0 * * ?"
-then
-	var value = avgTemp.intValue
-	var avgTemp = (Bathroom_Temperature.state + value) / 2
-	TempAverage.postUpdate(avgTemp)
-end
-
 rule ControlHumidityInBathroomOnWeek
 when
 	Time cron "0 0/2 8-21 ? * MON-FRI"
 then
 	if (Bathroom_Fan_Timer.state == NULL) Bathroom_Fan_Timer.postUpdate(InitValueHalfHour)
 
-        var value = TempAverage
-        avgTemp = ((Bathroom_Temperature.state as Number) + avgTemp) / 2
-        TempAverage.postUpdate(avgTemp)
-
-	var tempDifference = ((TempAverage.state as Number) - (Bathroom_Temperature.state as Number)).abs()
-
 	valueFanBathroom = Bathroom_Fan_Timer.state as Number
-	if ((Bathroom_Humidity.state >= 90) && (tempDifference >= 2) && (Bathroom_Fan.state == OFF)) {
+	if ((Bathroom_Humidity.state >= 90) && (Bathroom_Fan.state == OFF) && (FanCounter < 2)) {
 		sendCommand(Bathroom_Fan, ON)
 		timerBathroomFan = createTimer(now.plusMinutes(valueFanBathroom.intValue)) [|
                 	sendCommand(Bathroom_Fan, OFF)
                         timerBathroomFan = null
+			FanCounter = FanCounter + 1
                 ]
 		var count = valueFanBathroom
 		while(count >= 0) {
@@ -110,15 +82,8 @@ when
 then
 	if (Bathroom_Fan_Timer.state == NULL) Bathroom_Fan_Timer.postUpdate(InitValueHalfHour)
 
-	var value = TempAverage
-        avgTemp = ((Bathroom_Temperature.state as Number) + avgTemp) / 2
-        TempAverage.postUpdate(avgTemp)
-
-        var tempDifference = ((TempAverage.state as Number) - (Bathroom_Temperature.state as Number)).abs()
-
-
 	valueFanBathroom = Bathroom_Fan_Timer.state as Number
-        if ((Bathroom_Humidity.state >= 90) && (tempDifference >= 2) && (Bathroom_Fan.state == OFF)) {
+        if ((Bathroom_Humidity.state >= 90) && (Bathroom_Fan.state == OFF)) {
                 sendCommand(Bathroom_Fan, ON)
                 timerBathroomFan = createTimer(now.plusMinutes(valueFanBathroom.intValue)) [|
                 	sendCommand(Bathroom_Fan, OFF)
@@ -130,23 +95,6 @@ then
                         count = count - 1
                         Thread::sleep(60000)
                 }
-        }
-end
-
-rule BathroomFanControlWhenActivite
-when
-        Item Bathroom_Fan received update ON
-then
-        valueFanBathroom = Bathroom_Fan_Timer.state as Number
-        timerBathroomFan = createTimer(now.plusMinutes(valueFanBathroom.intValue)) [|
-                sendCommand(Bathroom_Fan, OFF)
-                timerBathroomFan = null
-        ]
-        var count = valueFanBathroom
-        while(count >= 0) {
-                Countdown_Bathroom_Fan.postUpdate(count)
-                count = count - 1
-                Thread::sleep(60000)
         }
 end
 
@@ -179,6 +127,18 @@ then
 	}
 end
 
+rule "Startup Init"
+when
+	System started
+then
+	RoofEnabled = now
+	RoofDisabled = now
+	TimeEnabled = 0
+	Energy = TimeEnabled/1000 * Power
+	Energy = Energy/3600
+	EnergyTotal.postUpdate(Energy)
+end
+
 rule "Track roofCable On Off"
 when
 	Item Kitchen_Light changed
@@ -196,7 +156,7 @@ end
 
 rule PirDectectObject
 when
-	Item StorageRoom_PIR received update
+	Item RF_Message received update
 then
 	if (Storageroom_Light_Timer.state == NULL) Storageroom_Light_Timer.postUpdate(InitValueFiveMinutes)
 	valueLightStorageroom = Storageroom_Light_Timer.state as Number
@@ -218,13 +178,11 @@ then
 	}
 	
 	if (RF_Message.state == "3010A2") {
-		if (Smallbedroom_Buttondoor.state == OFF) {
-			sendCommand(Smallbedroom_Doorlock, ON)
-			sendCommand(Smallbedroom_Buttondoor, ON)
+		if (Storageroom_Light.state == OFF) {
+			sendCommand(Storageroom_Light, ON)
 		} else {
-			if (Smallbedroom_Buttondoor.state == ON) {
-				sendCommand(Smallbedroom_Doorlock, OFF)
-				sendCommand(Smallbedroom_Buttondoor, OFF)
+			if (Storageroom_Light.state == ON) {
+				sendCommand(Storageroom_Light, OFF)
 			}
 		}
 	}
@@ -245,6 +203,6 @@ then
 	sendCommand(Office_Heater, OFF)
 	sendCommand(Masterbedroom_Heater, OFF)
 	sendCommand(Livingroom_Light_Support, OFF)
-//	sendCommand(Livingroom_HiFi, OFF)
+	sendCommand(Livingroom_HiFi, OFF)
 	sendCommand(Masterbedroom_Light, OFF)
 end

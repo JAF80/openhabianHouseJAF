@@ -5,10 +5,7 @@ sitemap default label="Casa" {
     }
     Frame label="Presence" {
 	Switch item=gPresence icon="parents_1_1" label="Presence"
-<<<<<<< HEAD
-=======
 	//Text item=none label="" icon="none"
->>>>>>> fb9b765a832bdc952791cac37dde22edab26224f
 	Text label="People" icon="parents_1_1"
 		{
 			Switch item=JAF_Cell_Phone_Online icon="boy_3" label="JAF"
@@ -24,6 +21,7 @@ sitemap default label="Casa" {
                         Switch item=Bathroom_Fan label="Ligar" icon="fan"
                         Text item=Countdown_Bathroom_Fan label="Temporizador [%d m]" icon="time"
                         Text item=Bathroom_Temperature label="Temperatura [%.1f ºC]" icon="temperature"
+			Text item=TempAverage label="Temperatura Média [%.1f ºC]" icon="temperature"
                         Text item=Bathroom_Humidity label="Humidade [%.1f %%]" icon="humidity"
                 }
 		Frame label="Grafico de Temperatura e Humidade" {
@@ -117,7 +115,8 @@ sitemap default label="Casa" {
 			Switch item=Smallbedroom_Light_Sound label="Ligar" icon="light"
 		}
 		Frame label="Detector porta aberta" {
-			Switch item=Bedroom_Door_Detector_Value label="Aberto" icon="door"
+			Switch item=Smallbedroom_Buttondoor label="Aberto" icon="door"
+			Switch item=Smallbedroom_Doorlock label="Trancado" icon="lock"
 		}
 		Frame label="Controlador do Aquecedor" {
 			Switch item=Smallbedroom_Heater label="Ligar" icon="heating"
@@ -186,10 +185,7 @@ sitemap default label="Casa" {
 			Switch item=Livingroom_Light_Support label="Luz de Apoio da Sala" icon="light"
 			Switch item=Storageroom_Light label="Luz da despensa" icon="light"
 			Switch item=Masterbedroom_Light label="Luz do Quarto Grande" icon="light"
-<<<<<<< HEAD
 			Switch item=Smallbedroom_Light_Sound label="Luz/Som do Quarto Pequeno" icon="light"
-=======
->>>>>>> fb9b765a832bdc952791cac37dde22edab26224f
                 }
         }
 	Group item=gEquipment label="Equipamento" icon="switch" {
@@ -220,6 +216,7 @@ sitemap default label="Casa" {
                 Frame label="Temperatura" {
                         Text item=Bathroom_Temperature label="Casa de Banho Grande [%.2f ºC]" icon="temperature"
 			Text item=Studio_Temperature label="Escritorio [%.2f ºC]" icon="temperature"
+			Text item=Masterbedroom_Temperature label="Quarto Grande [%.2f ºC]" icon="temperature"
                 }
 		Frame label="Grafico de Temperatura" {
                         Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
@@ -244,6 +241,7 @@ sitemap default label="Casa" {
                 Frame label="Humidade" {
                         Text item=Bathroom_Humidity label="Casa de Banho Grande [%.2f %%]" icon="humidity"
 			Text item=Studio_Humidity label="Escritório [%.2f %%]" icon="humidity"
+			Text item=Masterbedroom_Humidity label="Quarto Grande [%.2f %%]" icon="humidity"
                 }
 		Frame label="Grafico de Humidade" {
                         Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
@@ -292,22 +290,22 @@ sitemap default label="Casa" {
         	}
 	}
 
-	Frame label="Grafico de Consumo de Energia" {
-                        Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
-                                7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
-
-                        Chart  item=HomeEnergyChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
-                        Chart  item=HomeEnergyChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
-                        Chart  item=HomeEnergyChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
-                        Chart  item=HomeEnergyChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
-                        Chart  item=HomeEnergyChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
-                        Chart  item=HomeEnergyChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
-                        Chart  item=HomeEnergyChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
-                        Chart  item=HomeEnergyChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
-                        Chart  item=HomeEnergyChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
-                        Chart  item=HomeEnergyChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
-                        Chart  item=HomeEnergyChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
-                        Chart  item=HomeEnergyChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
-                        Chart  item=HomeEnergyChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
-	}
+//	Frame label="Grafico de Consumo de Energia" {
+//                        Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
+//                                7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
+//
+//                        Chart  item=HomeEnergyChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+//                        Chart  item=HomeEnergyChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+//                       Chart  item=HomeEnergyChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+//                        Chart  item=HomeEnergyChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+//                        Chart  item=HomeEnergyChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+//                        Chart  item=HomeEnergyChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+//                        Chart  item=HomeEnergyChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+//                        Chart  item=HomeEnergyChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+//                        Chart  item=HomeEnergyChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+//                        Chart  item=HomeEnergyChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+//                        Chart  item=HomeEnergyChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+//                        Chart  item=HomeEnergyChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+//                        Chart  item=HomeEnergyChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+//	}
 }		

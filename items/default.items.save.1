@@ -137,13 +137,12 @@ Switch	Masterbedroom_Light	"Luz do Quarto Grande"	<light>	(MasterBedroom, gLight
 // 192.168.2.41
 Switch  Smallbedroom_Light_Sound     "Luz/Som do Quarto Pequeno"  <light> (Bedroom, gLight)
         {mqtt=">[broker:cmnd/SmallbedroomLightSoundSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomLightSoundSonoff/POWER:state:default]"}
-// 
-// ##### DEFINITION OF OTHERS EQUIPMENT #####
+// SmallbedroomLightSoundSonoff# DEFINITION OF OTHERS EQUIPMENT #####
 // 192.168.2.25
 Switch	Livingroom_HiFi	"Aparelhagem"	<receiver>	(Livingroom, gEquipment)
 	{mqtt=">[broker:cmnd/LivingroomHiFiSonoff/POWER:command:*:default], <[broker:stat/LivingroomHiFiSonoff/POWER:state:default]"}
 Switch	Smallbedroom_Doorlock	"Tranca"	<lock>	(Bedroom, gEquipment)
-	{mqtt=">[broker:cmnd/SmallbedroomDoorlockSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomDoorlockSonoff/POWER:state:default]"}
+	{mqtt=">[broker:cmnd/SmallbedroomDoorlockSonoff/POWER:command:*:defautl], <[broker:stat/SmallbedroomDoorlockSonoff/POWER:state:default]"}
 
 // ##### DEFINITION OF RF BRIDGE SENSORS #####
 // 192.168.2.34
@@ -151,4 +150,3 @@ String	RF_Message "Mensagem RF"	<text>	(Home)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
 String	StorageRoom_PIR	"Sensor PIR Despensa [%s]"	<motion>	(Storageroom)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
-Switch	Smallbedroom_Buttondoor	"Porta Aberta"	<door>	(Bedroom)

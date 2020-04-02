@@ -80,15 +80,13 @@ Number none "" (Home)
 
 // ##### DEFINITION OF ALL HEATER #####
 // 192.168.2.5
+
 Switch	Bathroom_Towel_Heater	"Aquecedor Toalha"	<heating>	(Bathroom, gHeater)
 	{mqtt=">[broker:cmnd/BathroomHeaterSonoff/POWER:command:*:default], <[broker:stat/BathroomHeaterSonoff/POWER:state:default]"}
-// 192.168.2.18
 Switch  Office_Heater   "Aquecedor Toalha"      <heating>       (Office, gHeater)
         {mqtt=">[broker:cmnd/OfficeHeaterSonoff/POWER:command:*:default], <[broker:stat/OfficeHeaterSonoff/POWER:state:default]"}
-// 192.168.2.19
 Switch  Masterbedroom_Heater   "Aquecedor Quarto Grande"      <heating>       (MasterBedroom, gHeater)
         {mqtt=">[broker:cmnd/MasterbedroomHeaterSonoff/POWER:command:*:default], <[broker:stat/MasterbedroomHeaterSonoff/POWER:state:default]"}
-// 192.168.2.38
 Switch  Smallbedroom_Heater   "Aquecedor Quarto Pequeno"      <heating>       (Bedroom, gHeater)
         {mqtt=">[broker:cmnd/SmallbedroomHeaterSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomHeaterSonoff/POWER:state:default]"}
 		 
@@ -98,57 +96,47 @@ Switch  Bathroom_Fan    "Ventoinha"     <fan>   (Bathroom, gFan)
         {mqtt=">[broker:cmnd/BathroomFanSonoff/POWER:command:*:default], <[broker:stat/BathroomFanSonoff/POWER:state:default]"}
 
 // ##### DEFINITION OF ALL DEHUMIDIFIER #####
-// 192.168.2.17
 Switch	Office_Dehumi	"Desumidificador"	<humidity>	(Office, gDehumidity)
 	{mqtt=">[broker:cmnd/StudioDehumiSonoff/POWER:command:*:default], <[broker:stat/StudioDehumiSonoff/POWER:state:default]"}
 		
 // ##### DEFINITION OF ALL TEMPERATURE SENSOR #####
-// 192.168.2.9
 Number  Bathroom_Temperature    "Temperatura"   <temperature>   (Bathroom, gTemperature, BathroomTempSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
-// 192.168.2.17
 Number  Studio_Temperature    "Temperatura"   <temperature>   (Studio, gTemperature, OfficeTempSensorChart)
         {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
-// 192.168.2.43
 Number  Masterbedroom_Temperature    "Temperatura"   <temperature>   (MasterBedroom, gTemperature, MasterbedroomTempSensorChart)
         {mqtt="<[broker:tele/MasterbedroomTempSonoff/SENSOR:state:JSONPATH($.SI7021.Temperature)]"}
 	
 // ##### DEFINITION OF ALL HUMIDITY SENSOR #####
-// 192.168.2.9
 Number  Bathroom_Humidity       "Humidade"      <humidity>      (Bathroom, gHumidity, BathroomHumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
-// 192.168.2.17
 Number  Studio_Humidity       "Humidade"      <humidity>      (Studio, gHumidity, OfficeHumidSensorChart)
         {mqtt="<[broker:tele/StudioDehumiSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
-// 192.168.2.43	
 Number  Masterbedroom_Humidity       "Humidade"      <humidity>      (Studio, gHumidity, MasterbedroomHumidSensorChart)
         {mqtt="<[broker:tele/MasterbedroomTempSonoff/SENSOR:state:JSONPATH($.SI7021.Humidity)]"}
 
 // ##### DEFINITION OF ALL LIGHT SENSOR #####
-// 192.168.2.26
 Switch	Livingroom_Light_Support	"Luz de Apoio"	<lightbulb>	(Livingroom, gLight)
 	{mqtt=">[broker:cmnd/LivingroomLightSupportSonoff/POWER:command:*:default], <[broker:stat/LivingroomLightSupportSonoff/POWER:state:default]"}
-// 192.168.2.36
 Switch	Storageroom_Light	"Luz da Despensa"	<light>	(Storageroom, gLight)
 	{mqtt=">[broker:cmnd/StorageroomLightSonoff/POWER:command:*:default], <[broker:stat/StorageroomLightSonoff/POWER:state:default]"}
-// 192.168.2.37
 Switch	Masterbedroom_Light	"Luz do Quarto Grande"	<light>	(MasterBedroom, gLight)
 	{mqtt=">[broker:cmnd/MasterbedroomLightSonoff/POWER:command:*:default], <[broker:stat/MasterbedroomLightSonoff/POWER:state:default]"}
-// 192.168.2.41
 Switch  Smallbedroom_Light_Sound     "Luz/Som do Quarto Pequeno"  <light> (Bedroom, gLight)
         {mqtt=">[broker:cmnd/SmallbedroomLightSoundSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomLightSoundSonoff/POWER:state:default]"}
-// 
+
 // ##### DEFINITION OF OTHERS EQUIPMENT #####
-// 192.168.2.25
 Switch	Livingroom_HiFi	"Aparelhagem"	<receiver>	(Livingroom, gEquipment)
 	{mqtt=">[broker:cmnd/LivingroomHiFiSonoff/POWER:command:*:default], <[broker:stat/LivingroomHiFiSonoff/POWER:state:default]"}
-Switch	Smallbedroom_Doorlock	"Tranca"	<lock>	(Bedroom, gEquipment)
-	{mqtt=">[broker:cmnd/SmallbedroomDoorlockSonoff/POWER:command:*:default], <[broker:stat/SmallbedroomDoorlockSonoff/POWER:state:default]"}
 
 // ##### DEFINITION OF RF BRIDGE SENSORS #####
-// 192.168.2.34
 String	RF_Message "Mensagem RF"	<text>	(Home)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
 String	StorageRoom_PIR	"Sensor PIR Despensa [%s]"	<motion>	(Storageroom)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
-Switch	Smallbedroom_Buttondoor	"Porta Aberta"	<door>	(Bedroom)
+String	Bedroom_Door_Detector "Sensor Porta aberta"	<door>	(Bedroom)
+	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
+Switch	Bedroom_Door_Detector_Value "Detector de Porta Aberta"	<door>	(Bedroom)
+String	ButtonTest	"Botão Test"	<switch>	(Office)
+	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
+String	ButtonTest_Value	"Botão Teste"	<switch>	(Office)
