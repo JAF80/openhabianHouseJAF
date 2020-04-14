@@ -218,13 +218,13 @@ then
 	}
 	
 	if (RF_Message.state == "3010A2") {
-		if (Smallbedroom_Buttondoor.state == OFF) {
+		if (Smallbedroom_Doorlock.state == OFF) {
 			sendCommand(Smallbedroom_Doorlock, ON)
-			sendCommand(Smallbedroom_Buttondoor, ON)
+			//sendCommand(Smallbedroom_Buttondoor, ON)
 		} else {
-			if (Smallbedroom_Buttondoor.state == ON) {
+			if (Smallbedroom_Doorlock.state == ON) {
 				sendCommand(Smallbedroom_Doorlock, OFF)
-				sendCommand(Smallbedroom_Buttondoor, OFF)
+				//sendCommand(Smallbedroom_Buttondoor, OFF)
 			}
 		}
 	}
