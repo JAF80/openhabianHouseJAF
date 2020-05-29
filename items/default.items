@@ -35,6 +35,10 @@ Group   Storageroom     "Despensa"      <suitcase>      (Home)
 // ##### Name to connect to Sonoff: stairwell
 Group	Stairwell	"Luz da Escada"	<suitcase>	(Home)
 
+// ##### Machines
+Group	WashingMachine	"Máquina de Lavar Roupa"	<whitegood>	(Home)
+Group	DishWasher	"Máquina de Lavar Loiça"	<whitegood>	(Home)
+
 Group   WeatherCasting  "Metereologia"  <climate>       (Home)
 
 Group	HomeEnergyChart	(Home, Charts)
@@ -48,6 +52,16 @@ Group	MasterbedroomTempSensorChart	(Home, Charts)
 Group	MasterbedroomHumidSensorChart	(Home, Charts)
 Group	TempSensorChart		(Home, Charts)
 Group	HumidSensorChart	(Home, Charts)
+// ##### Gráfico do consumo
+Group	WashingMachineSensorChart (Home, Charts)
+Group	WashingMachinePowerChart (Home, Charts)
+Number	ValuesWashingMachinePower "Potência Consumida [%.2f W]" <energy> (WashingMachineSensorChart)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Power)]"}
+Number	ValuesWashingMachineCurrent "Corrente Consumida [%.f A]" <energy> (WashingMachineSensorChart)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Current)]"}
+Number	ValuesWashingMachinePowerDay	"Corrente Consumida por dia [%.f A]" <energy> (WashingMachinePowerChart)
+//        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Yesterday)]"}
+        {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
 
 // ##### VARIABLES NEEDED FOR RULES #####
 Number TempAverage "Temperatura Média" (Home)
@@ -56,6 +70,7 @@ Number TempAverage "Temperatura Média" (Home)
 Number HomeSensorChartPeriod "Periodo" (Home)
 Number ValuesBathroomTemp       "Temperatura WC Grande [%.2f ºC]" <temperature> (BathroomTempSensorChart, TempSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Temperature)]"}
+Number ValuesBathroomTempAverage "Temperatura Média WC Grande [%.2f ºC]" <temperature> (BathroomTempSensorChart)
 Number ValuesBathroomHumid       "Humidade WC Grande [%.2f %%]" <humidity> (BathroomHumidSensorChart, HumidSensorChart)
         {mqtt="<[broker:tele/BathroomFanSonoff/SENSOR:state:JSONPATH($.AM2301.Humidity)]"}
 Number ValuesOfficeTemp    "Temperatura Escritorio [%.2f ºC]"   <temperature>   (OfficeTempSensorChart, TempSensorChart)
@@ -152,3 +167,68 @@ String	RF_Message "Mensagem RF"	<text>	(Home)
 String	StorageRoom_PIR	"Sensor PIR Despensa [%s]"	<motion>	(Storageroom)
 	{mqtt="<[broker:tele/StorageroomPirSonoff/RESULT:state:JSONPATH($.RfReceived.Data)]"}
 Switch	Smallbedroom_Buttondoor	"Porta Aberta"	<door>	(Bedroom)
+
+// ##### DEFINITION OF POW #####
+// 192.168.2.6
+//String	reachable	"Reachable"	<text>	(Home)
+//	{mqtt="<[broker:tele/KitchenLaundrySonoff/LWT)]"}
+Number  RSSI_WashingMachine    "WiFi Signal Strength"  <network>  (Home)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+Switch	Power_WashingMachine	"Power"	<energy>	(Home)
+	{mqtt=">[broker:cmnd/KitchenLaundrySonoff/POWER:command:*:default], <[broker:stat/KitchenLaundrySonoff/POWER:state:default]"}
+Number	Powerload_WashingMachine	"Power Load"	<energy>	(Home)
+	{mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Power)]"}
+Number	Voltage_WashingMachine	"Voltage" <energy>	(Home)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Voltage)]"}
+Number  Current_WashingMachine  "Corrent" <energy>      (Home)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Current)]"}
+Number  EnergyToday_WashingMachine  "Energy Today" <energy>      (Home)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Today)]"}
+Number  EnergyYesterday_WashingMachine  "Voltage" <energy>      (Home)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Yesterday)]"}
+Number  EnergyTotal_WashingMachine  "Voltage" <energy>      (Home)
+        {mqtt="<[broker:tele/KitchenLaundrySonoff/SENSOR:state:JSONPATH($.ENERGY.Total)]"}
+
+// ##### DEFINITION OF WIFI SIGNAL STRENGTH #####
+// Bathroom_Towel_Heater
+Number  RSSI_Bathroom_Towel_Heater    "Aquecedor de Toalhas da Casa de Banho Grande"  <network>  (Home)
+        {mqtt="<[broker:tele/BathroomHeaterSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Office_Heater
+Number  RSSI_Office_Heater    "Aquecedor do Escritório"  <network>  (Home)
+        {mqtt="<[broker:tele/OfficeHeaterSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Masterbedroom_Heater
+Number  RSSI_Masterbedroom_Heater    "Aquecedor do Quarto Principal"  <network>  (Home)
+        {mqtt="<[broker:tele/MasterbedroomHeaterSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Smallbedroom_Heater
+Number  RSSI_Smallbedroom_Heater    "Aquecedor do Quarto Pequeno"  <network>  (Home)
+        {mqtt="<[broker:tele/SmallbedroomHeaterSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Bathroom_Fan
+Number  RSSI_Bathroom_Fan    "Ventilador da Casa de Banho Grande"  <network>  (Home)
+        {mqtt="<[broker:tele/BathroomFanSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Office_Dehumi
+Number  RSSI_Office_Dehumi    "Desumidificador do Escritório"  <network>  (Home)
+        {mqtt="<[broker:tele/StudioDehumiSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Masterbedroom_Temperature
+Number  RSSI_Masterbedroom_Temperature    "Temperatura do Quarto Grande"  <network>  (Home)
+        {mqtt="<[broker:tele/MasterbedroomTempSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Livingroom_Light_Support
+Number  RSSI_Livingroom_Light_Support    "Luz de Suporte da Sala"  <network>  (Home)
+        {mqtt="<[broker:tele/LivingroomLightSupportSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Storageroom_Light
+Number  RSSI_Storageroom_Light    "Luz da Despensa"  <network>  (Home)
+        {mqtt="<[broker:tele/StorageroomLightSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Masterbedroom_Light
+Number  RSSI_Masterbedroom_Light    "Luz do Quarto Principal"  <network>  (Home)
+        {mqtt="<[broker:tele/StorageroomLightSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Smallbedroom_Light_Sound
+Number  RSSI_Smallbedroom_Light_Sound    "Luz e Som Quarto Pequeno"  <network>  (Home)
+        {mqtt="<[broker:tele/SmallbedroomLightSoundSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Livingroom_HiFi
+Number  RSSI_Livingroom_HiFi    "Aparelhagem da Sala"  <network>  (Home)
+        {mqtt="<[broker:tele/LivingroomHiFiSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// Smallbedroom_Doorlock
+Number  RSSI_Smallbedroom_Doorlock    "Fechadura do Quarto Pequeno"  <network>  (Home)
+        {mqtt="<[broker:tele/SmallbedroomDoorlockSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}
+// StorageRoom_PIR
+Number  RSSI_Storageroom_PIR    "PIR da Despensao"  <network>  (Home)
+        {mqtt="<[broker:tele/StorageroomPirSonoff/STATE:state:JSONPATH($.Wifi.RSSI)]"}

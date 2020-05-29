@@ -18,13 +18,19 @@ Items {
 	MasterbedroomHumidSensorChar* : strategy = everyUpdate, everyMinute
 	TempSensorChart* : strategy = everyUpdate, everyMinute
 	HumidSensorChart* : strategy = everyUpdate, everyMinute
-	HomeEnergyChart* : strategy = everyUpdate, everyMinute
+	//HomeEnergyChart* : strategy = everyUpdate, everyMinute
+	WashingMachineSensorChart* : strategy = everyUpdate, everyMinute
+	WashingMachinePowerChart* : strategy = everyUpdate, everyDay
 
 	ValuesBathroomTemp : strategy = everyUpdate, everyMinute
+	ValuesBathroomTempAverage : strategy = everyUpdate, everyMinute
 	ValuesBathroomHumid : strategy = everyUpdate, everyMinute
 	ValuesOfficeTemp : strategy = everyUpdate, everyMinute
 	ValuesOfficeHumid : strategy = everyUpdate, everyMinute
 	ValuesMasterbedroomTemp : strategy = everyUpdate, everyMinute
         ValuesMasterbedroomHumid : strategy = everyUpdate, everyMinute
-	EnergyTotal : strategy = everyUpdate, everyMinute
+	//EnergyTotal : strategy = everyUpdate, everyMinute
+	ValuesWashingMachinePower : strategy = everyUpdate, everyMinute
+        ValuesWashingMachineCurrent : strategy = everyUpdate, everyMinute
+	ValuesWashingMachinePowerDay : strategy = everyUpdate, everyDay
 }

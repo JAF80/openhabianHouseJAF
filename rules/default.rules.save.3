@@ -86,9 +86,11 @@ then
         avgTemp = ((Bathroom_Temperature.state as Number) + avgTemp) / 2
         TempAverage.postUpdate(avgTemp)
 	ValuesBathroomTempAverage.postUpdate(avgTemp)
+
 	var tempDifference = ((TempAverage.state as Number) - (Bathroom_Temperature.state as Number)).abs()
 
 	valueFanBathroom = Bathroom_Fan_Timer.state as Number
+
 	if ((Bathroom_Humidity.state >= 90) && (tempDifference >= 1) && (Bathroom_Fan.state == OFF)) {
 		sendCommand(Bathroom_Fan, ON)
 		timerBathroomFan = createTimer(now.plusMinutes(valueFanBathroom.intValue)) [|
@@ -134,7 +136,7 @@ then
         }
 end
 
-rule BathroomFanControlWhenActive
+rule BathroomFanControlWhenActivite
 when
         Item Bathroom_Fan received update ON
 then

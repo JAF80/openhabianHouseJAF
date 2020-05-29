@@ -132,9 +132,6 @@ sitemap default label="Casa" {
                         Text item=Studio_Temperature label="Temperatura [%.2f ºC]" icon="temperature"
                         Text item=Studio_Humidity label="Humidade [%.2f %%]" icon="humidity"
 		}
-		Frame label="Botão Test"  {
-			Switch item=ButtonTest_Value	label="Botão"	icon="switch"
-		}
 
 		Frame label="Grafico de Temperatura e Humidade" {
                         Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
@@ -174,6 +171,56 @@ sitemap default label="Casa" {
 			Switch item=Storageroom_Light label="Ligar" icon="light"
                         Text item=Countdown_Storageroom_Light label="Temporizador [%d m]" icon="time"
                 }
+	}
+	Group item=Kitchen label="Cozinha" icon="kitchen" {
+		Group item=WashingMachine label="Máquina de Lavar Roupa" icon="whitegood" {
+			Frame label="Consumo" {
+				Switch item=Power_WashingMachine label="Power" icon="light"
+        			Text item=Powerload_WashingMachine label="Power Load [%d W]" icon="energy"
+        			Text item=RSSI_WashingMachine  label="WiFi Signal Strength [%d %%]" icon="network"
+				Text item=Voltage_WashingMachine label="Tensão [%d V]" icon="energy"
+				Text item=Current_WashingMachine label="Corrente [%.2f A]" icon="energy"
+				Text item=EnergyToday_WashingMachine label="Energia Consumida Hoje [%.2f W]" icon="energy"
+                        	Text item=EnergyYesterday_WashingMachine label="Energia Consumida Ontem [%.2f W]" icon="energy"
+				Text item=none label="" icon="none"
+			}
+
+			Frame label="Gráfico do consumo energético" {
+				Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 
+					6="3 Day", 7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
+
+                        	Chart  item=WashingMachineSensorChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        	Chart  item=WashingMachineSensorChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        	Chart  item=WashingMachineSensorChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        	Chart  item=WashingMachineSensorChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        	Chart  item=WashingMachineSensorChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        	Chart  item=WashingMachineSensorChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        	Chart  item=WashingMachineSensorChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        	Chart  item=WashingMachineSensorChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        	Chart  item=WashingMachineSensorChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        	Chart  item=WashingMachineSensorChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        	Chart  item=WashingMachineSensorChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        	Chart  item=WashingMachineSensorChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        	Chart  item=WashingMachineSensorChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+
+				Chart  item=WashingMachinePowerChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
+                        	Chart  item=WashingMachinePowerChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
+                        	Chart  item=WashingMachinePowerChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
+                        	Chart  item=WashingMachinePowerChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
+                        	Chart  item=WashingMachinePowerChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
+                        	Chart  item=WashingMachinePowerChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
+                        	Chart  item=WashingMachinePowerChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
+                        	Chart  item=WashingMachinePowerChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
+                        	Chart  item=WashingMachinePowerChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
+                        	Chart  item=WashingMachinePowerChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
+                        	Chart  item=WashingMachinePowerChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
+                        	Chart  item=WashingMachinePowerChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
+                        	Chart  item=WashingMachinePowerChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
+			}
+		} 
+		Group item=DishWasher label="Máquina de Lavar Loiça" icon="whitegood" {
+			Text item=none label="" icon="none"
+		}
 	}
     }
 	Frame label="Controlo dos dispositivos por grupos" {
@@ -288,24 +335,23 @@ sitemap default label="Casa" {
 				Setpoint item=Storageroom_Light_Timer label="Luz Despensa [%d m]" minValue=0 maxValue=30 step=1
 			}
         	}
+		Text label="Força do Sinal WiFi" icon="network" {
+			Frame label="Força sinal WiFi" {
+			        Text item=RSSI_Smallbedroom_Doorlock label="Fechadura do Quarto Pequeno [%d %%]" icon="network"			
+                                Text item=RSSI_Bathroom_Towel_Heater label="Aquecedor de Toalhas da Casa de Banho Grande [%d %%]" icon="network"
+                                Text item=RSSI_Office_Heater label="Aquecedor do Escritório [%d %%]" icon="network"
+                                Text item=RSSI_Masterbedroom_Heater label="Aquecedor do Quarto Principal [%d %%]" icon="network"
+                                Text item=RSSI_Smallbedroom_Heater label="Aquecedor do Quarto Pequeno [%d %%]" icon="network"
+                                Text item=RSSI_Bathroom_Fan label="Ventilador da Casa de Banho Grande [%d %%]" icon="network"
+                                Text item=RSSI_Office_Dehumi label="Desumificador do Escritório [%d %%]" icon="network"
+                                Text item=RSSI_Masterbedroom_Temperature label="Temperatura do Quarto Principal [%d %%]" icon="network"
+                                Text item=RSSI_Livingroom_Light_Support label="Luz do Suporte da Sala [%d %%]" icon="network"
+                                Text item=RSSI_Storageroom_Light label="Luz da Despensa [%d %%]" icon="network"
+                                Text item=RSSI_Masterbedroom_Light label="Luz do Quarto Principal [%d %%]" icon="network"
+                                Text item=RSSI_Storageroom_PIR label="PIR da Despensa [%d %%]" icon="network"
+                                Text item=RSSI_Smallbedroom_Light_Sound label="Luz do Som do Quarto Pequeno [%d %%]" icon="network"
+                                Text item=RSSI_Livingroom_HiFi label="Aparelhagem da Sala [%d %%]" icon="network"
+			}
+		}
 	}
-
-//	Frame label="Grafico de Consumo de Energia" {
-//                        Switch item=HomeSensorChartPeriod mappings=[0="1h", 1="4h", 2="8h", 3="12h", 4="Day", 5="2 Day", 6="3 Day",
-//                                7="Week", 8="2 Week", 9="Month", 10="2 Month", 11="4 Month", 12="Year"]
-//
-//                        Chart  item=HomeEnergyChart period=h   refresh=60000 visibility=[HomeSensorChartPeriod==0] legend=true
-//                        Chart  item=HomeEnergyChart period=4h  refresh=60000 visibility=[HomeSensorChartPeriod==1] legend=true
-//                       Chart  item=HomeEnergyChart period=8h  refresh=60000 visibility=[HomeSensorChartPeriod==2] legend=true
-//                        Chart  item=HomeEnergyChart period=12h refresh=60000 visibility=[HomeSensorChartPeriod==3] legend=true
-//                        Chart  item=HomeEnergyChart period=D   refresh=60000 visibility=[HomeSensorChartPeriod==4] legend=true
-//                        Chart  item=HomeEnergyChart period=2D   refresh=60000 visibility=[HomeSensorChartPeriod==5] legend=true
-//                        Chart  item=HomeEnergyChart period=3D   refresh=60000 visibility=[HomeSensorChartPeriod==6] legend=true
-//                        Chart  item=HomeEnergyChart period=W   refresh=60000 visibility=[HomeSensorChartPeriod==7] legend=true
-//                        Chart  item=HomeEnergyChart period=2W   refresh=60000 visibility=[HomeSensorChartPeriod==8] legend=true
-//                        Chart  item=HomeEnergyChart period=M   refresh=60000 visibility=[HomeSensorChartPeriod==9] legend=true
-//                        Chart  item=HomeEnergyChart period=2M   refresh=60000 visibility=[HomeSensorChartPeriod==10] legend=true
-//                        Chart  item=HomeEnergyChart period=4M   refresh=60000 visibility=[HomeSensorChartPeriod==11] legend=true
-//                        Chart  item=HomeEnergyChart period=Y   refresh=60000 visibility=[HomeSensorChartPeriod==12] legend=true
-//	}
 }		
